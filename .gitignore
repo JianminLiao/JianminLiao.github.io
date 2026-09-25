@@ -5,3 +5,4 @@ Thumbs.db
 .preview/
 node_modules/
 __pycache__/
+output/
