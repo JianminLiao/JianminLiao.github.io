@@ -19,66 +19,63 @@
 
 \textbf{Research in the AI era should pursue intrinsic value while building the external support needed to sustain that pursuit.}
 
-Even when intrinsic value is the sole objective, an initial phase devoted entirely to external return can be necessary for optimal research. We prove this for a linear benchmark with a sufficiently long horizon, then illustrate the optimal strategy using the same fixed linear functions in every cycle.
+Under the assumptions below, maximizing expected intrinsic value requires an initial phase devoted entirely to external return. An optimal strategy then mixes intrinsic and external work. With enough time, its expected intrinsic allocation share is nondecreasing, even when returns vary randomly across cycles.
 
-Here, intrinsic value means the scientific understanding or other substantive contribution that the researcher ultimately values. External return means support convertible into research funding, measured in the same units as expenditure. The distinction separates the purpose of research from the resources that sustain it.
+Intrinsic value means the scientific understanding or other substantive contribution that the researcher ultimately values. External return means support convertible into research funding, measured in the same units as expenditure. The model treats external support as a means of sustaining research.
 
 \section*{Assumptions}
 
-Consider a fixed number $n$ of research cycles. In cycle $i$, let $c_i$ be expenditure and $p_i\in[0,1]$ the share allocated to intrinsic work. Write $I_i$ and $E_i$ for intrinsic value and external return, respectively.
+Consider $n$ research cycles. In cycle $i$, let $c_i$ be expenditure and $p_i\in[0,1]$ the fraction allocated to intrinsic work. Normalize the initial expenditure to $c_1=1$.
 
-\textbf{1. Increasing production and funding functions between linear bounds.} Choose units so that $c_1=1$, and write
+\textbf{1. Linear returns with iid random coefficients.} Intrinsic value, external return, and the next research budget satisfy
 \[
- I_i=p_i f_i(c_i),\qquad E_i=(1-p_i)g_i(c_i),\qquad c_{i+1}=h_i(E_i).
+ I_i=a_i p_i c_i,\qquad E_i=b_i(1-p_i)c_i,\qquad c_{i+1}=d_i E_i.
 \]
-Each function is strictly increasing. For each family $F=f,g,h$, there are constants $0<\ell_F<L_F$ such that
+The vectors $(a_i,b_i,d_i)$ are independent and identically distributed across cycles. Their components may be dependent within a cycle. All coefficients have finite upper bounds, and $a_i$ has a strictly positive lower bound. Write
 \[
- \ell_F x\le F_i(x)\le L_F x\qquad(x\ge0,\ 1\le i\le n).
+ b=\operatorname{ess\,inf} b_i,\qquad d_i\ge1\ \text{almost surely},\qquad \mathbb E[d_i]>1.
 \]
-The bounds apply to function values; the functions may be nonlinear and may change across cycles. They bound output per unit of input without fixing curvature. The proportion enters directly as $p_i$ or $1-p_i$. For the final cycle, the funding update is only a convenient notation.
+Thus $b$ is the greatest almost-sure lower bound on the external-return coefficient. The funding conditions mean that external support is fully carried into the next budget and has a positive probability of expanding it. The common distribution stays fixed across cycles, although realized coefficients can change.
 
-\textbf{2. A positive and growing safety balance.} Let $B_i$ denote the cumulative funding surplus at the end of cycle $i$:
+\textbf{2. A positive and growing safety balance.} Let the cumulative funding surplus satisfy
 \[
  B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
 \]
-Require
+Require, almost surely in every cycle,
 \[
- B_i\ge\max\{\delta,\rho B_{i-1}\},\qquad \delta>0,\quad\rho>1.
+ B_i\ge\max\{\delta,\rho B_{i-1}\},\qquad 1<\rho<b,\qquad 0<\delta\le b-1.
 \]
-The fixed floor $\delta$ establishes a safety reserve, while $\rho$ requires it to grow. Funding is assessed at cycle boundaries; the initial expenditure is supplied as seed funding.
+The floor $\delta$ establishes a safety reserve, and $\rho$ requires it to grow. The coefficient bound makes the initial reserve feasible and leaves room for intrinsic work. The initial expenditure is supplied as seed funding; balances are assessed at cycle boundaries.
 
-\textbf{3. Intrinsic value as the sole objective.} Choose the allocation shares to maximize
+\textbf{3. Decisions before current returns are known.} The researcher observes the current budget and balance and chooses $p_i$ before observing the current coefficients. Past coefficients need not be observed. The common coefficient distribution is known, and the sole objective is
 \[
- \sum_{i=1}^{n} I_i.
+ \max\ \mathbb E\!\left[\sum_{i=1}^{n} I_i\right].
 \]
-All functions are deterministic and known when the allocation is chosen. Each cycle's intrinsic value receives equal weight, and external return has value through the funding dynamics and constraints.
+Each cycle's intrinsic value receives equal weight. External return matters through subsequent funding and the safety constraints. This information structure separates observable resources from uncertain research productivity.
 
-\section*{An exact result for the linear benchmark}
-
-For the theorem, specialize to
-\[
- f_i(c)=c,\qquad g_i(c)=bc,\qquad h_i(e)=e,
-\]
-with $0<\delta\le b-1$ and $1<\rho<b$. These inequalities make the initial reserve feasible and leave room for intrinsic work while the reserve grows. Define
-\[
- K=\min\left\{m\ge1:(b-\rho)\sum_{j=0}^{m-1}\rho^j>1\right\},
- \qquad n>K.
-\]
-Here $m$ is an integer. Since $b>\rho>1$, $K$ is finite. The horizon condition gives early external returns enough time to generate later intrinsic value.
+\section*{The optimal allocation}
 
 \begin{theorem}
-In this linear benchmark, every optimal strategy devotes the first $n-K$ cycles entirely to external return:
+Under these assumptions, there are finite integers $1\le K<N$, depending on the common distribution and the model parameters, with the following property. For every horizon $n\ge N$, every optimal strategy devotes its first $n-K$ cycles entirely to external return:
 \[
- p_i=0\qquad (1\le i\le n-K).
+ p_i=0\qquad(1\le i\le n-K).
 \]
-There is an optimal strategy that then meets the balance-growth constraint exactly in all remaining cycles:
+There is an optimal strategy that then uses the minimum external share needed to guarantee the safety balance:
 \[
- B_i=\rho B_{i-1},\qquad
- p_i=1-\frac{1+\rho B_{i-1}}{b(1+B_{i-1})}\in(0,1)
+ p_i=1-\frac{c_i+(\rho-1)B_{i-1}}{b c_i}\in(0,1)
  \qquad(n-K<i\le n).
 \]
-Thus, maximizing intrinsic value alone requires an initial phase of full external focus and admits a single subsequent switch to a mixture of intrinsic and external work.
+For this strategy, the expected intrinsic allocation share is nondecreasing:
+\[
+ \begin{aligned}
+ 0&=\mathbb E[p_1]=\cdots=\mathbb E[p_{n-K}],\\
+ 0&<\mathbb E[p_{n-K+1}]\le\cdots\le\mathbb E[p_n].
+ \end{aligned}
+\]
+Equivalently, the expected external share $1-\mathbb E[p_i]$ is nonincreasing. The strategy requires only the current budget, balance, cycle number, and the known distribution.
 \end{theorem}
+
+The phase structure already holds whenever $n>K$. The possibly larger threshold $N$ ensures monotonicity of the expected proportions. These expectations average over random histories; individual trajectories can fluctuate. Favorable external returns can leave the realized balance above its required minimum.
 
 \section*{A numerical example}
 
@@ -86,82 +83,137 @@ Thus, maximizing intrinsic value alone requires an initial phase of full externa
 \centering
 \begin{tikzpicture}
 \begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=0.5,xmax=16.5,ymin=0,ymax=2,axis y line*=right,axis x line*=bottom,
-xtick={1,4,7,10,13,16},ytick={0,0.5,1,1.5,2},
+xmin=0.5,xmax=13.5,ymin=0,ymax=2,axis y line*=right,axis x line*=bottom,
+xtick={1,4,7,10,13},ytick={0,0.5,1,1.5,2},
 xlabel={Research cycle},ylabel={Cumulative intrinsic value},
 tick label style={font=\small},label style={font=\small},
 ybar stacked,bar width=8pt,legend style={at={(0.02,0.98)},anchor=north west,
 font=\small,draw=none,fill=none}]
-\addplot[draw=none,fill=green!12!gray!20] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.11897) (6,0.23894) (7,0.35994) (8,0.48205) (9,0.60530) (10,0.72976) (11,0.85549) (12,0.98255) (13,1.11101) (14,1.24094) (15,1.37241) (16,1.50549)};
+\addplot[draw=none,fill=green!12!gray!20] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.13943) (6,0.28786) (7,0.44582) (8,0.61390) (9,0.79272) (10,0.98293) (11,1.18523) (12,1.40034) (13,1.62905)};
 \addlegendentry{Value from earlier cycles}
-\addplot[draw=none,fill=teal!75] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.11897) (5,0.11996) (6,0.12101) (7,0.12210) (8,0.12325) (9,0.12446) (10,0.12573) (11,0.12706) (12,0.12846) (13,0.12993) (14,0.13147) (15,0.13309) (16,0.13479)};
+\addplot[draw=none,fill=teal!75] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.13943) (5,0.14842) (6,0.15796) (7,0.16808) (8,0.17882) (9,0.19021) (10,0.20230) (11,0.21511) (12,0.22871) (13,0.24312)};
 \addlegendentry{Added this cycle}
 \addlegendimage{line legend,blue!65!black,very thick,mark=*}
 \addlegendentry{Intrinsic allocation (left axis)}
 \end{axis}
 \begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=0.5,xmax=16.5,ymin=0,ymax=14,axis y line*=left,axis x line=none,xtick=\empty,
+xmin=0.5,xmax=13.5,ymin=0,ymax=14,axis y line*=left,axis x line=none,xtick=\empty,
 ytick={0,2,4,6,8,10,12,14},yticklabel={\pgfmathprintnumber{\tick}\%},
 ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\small}]
-\addplot[blue!65!black,very thick,mark=*,mark size=1.5pt] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,8.69906) (5,8.65538) (6,8.61074) (7,8.56518) (8,8.51871) (9,8.47136) (10,8.42317) (11,8.37418) (12,8.32442) (13,8.27394) (14,8.22278) (15,8.17099) (16,8.11862)};
+\addplot[blue!65!black,very thick,mark=*,mark size=1.5pt] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,8.80704) (5,8.82038) (6,8.83339) (7,8.84611) (8,8.85852) (9,8.87065) (10,8.88250) (11,8.89409) (12,8.90541) (13,8.91649)};
 \end{axis}
 \end{tikzpicture}
-\caption{An optimal trajectory with the same fixed linear functions in every cycle: three cycles of full external focus, followed by thirteen cycles of mixed allocation. The line shows the intrinsic allocation share (left axis). Each full bar shows cumulative intrinsic value (right axis); its darker segment is the intrinsic value added in that cycle, and its lighter segment is the value accumulated in earlier cycles.}
+\caption{An optimal trajectory with the same fixed linear functions in every cycle: three cycles of full external focus, followed by ten cycles of mixed allocation. The line shows the intrinsic allocation share (left axis). Each full bar shows cumulative intrinsic value (right axis); its darker segment is the intrinsic value added in that cycle, and its lighter segment is the value accumulated in earlier cycles.}
 \end{figure}
 
-Use the same three linear functions in all sixteen cycles:
+For a single fixed-coefficient illustration, use
 \[
- f_i(c)=c,\qquad g_i(c)=1.11c,\qquad h_i(e)=e,
+ a_i=1,\qquad b_i=1.11,\qquad d_i=1.05,
 \]
-with $c_1=1$, $B_0=0$, $\delta=0.1$, and $\rho=1.05$. The theorem gives $K=13$, so the optimal strategy has a short initial phase of three cycles devoted entirely to external return, followed by thirteen cycles of mixed allocation.
+with $n=13$, $\rho=1.05$, and $\delta=0.1$. Constant coefficients are a degenerate iid distribution and satisfy $\mathbb E[d_i]>1$. The Bellman recursion below gives $K=10$: three cycles of full external focus, followed by ten cycles of mixed allocation.
 
-During cycles 1--3, $p_i=0$ and $B_i=1.11^i-1$. During cycles 4--16, the balance grows by exactly 5\% each cycle, and the allocation follows the theorem's formula. The intrinsic share is 8.70\% in cycle 4 and 8.12\% in cycle 16. Although this share decreases slightly as the safety balance grows, the larger research budget raises the intrinsic increment from 0.1190 to 0.1348. Cumulative intrinsic value reaches 1.6403 in normalized units.
+Here $d_i=\rho$, so during the mixed phase the reserve-to-budget ratio satisfies
+\[
+ \frac{B_i}{c_{i+1}}=
+ \frac{B_{i-1}/c_i}{1+(\rho-1)B_{i-1}/c_i}
+ <\frac{B_{i-1}}{c_i}.
+\]
+Consequently, the intrinsic share increases throughout this phase. For these fixed coefficients, monotonicity already holds for every $n>K$.
 
-The figure displays this single optimal trajectory. No functions or coefficients change across cycles, and no averaging is used. The fixed safety floor and balance-growth requirement hold in every cycle.
+The intrinsic share rises from 8.81\% in cycle 4 to 8.92\% in cycle 13. The corresponding intrinsic increments are 0.1394 and 0.2431, and cumulative intrinsic value reaches 1.8722. This is one deterministic trajectory with no averaging. The same figure combines the allocation line with cumulative-value bars whose darker portions show the current increments.
 
 \section*{Proof}
 
+\textbf{1. Feasible actions and the Bellman recursion.} After the first cycle, the states satisfy $\delta\le B\le c$. Indeed, if $B\le c$, then
+\[
+ B'=B+E-c\le E\le d_iE=c'.
+\]
+The safety constraint preserves the lower bound. Write $u=(1-p)c$ for the expenditure allocated to external work. At a state $(c,B)$, its feasible interval is exactly
+\[
+ \frac{c+(\rho-1)B}{b}\le u\le c.
+\]
+This follows from the essential lower bound $b$ and the almost-sure safety requirement. The interval has positive length because $B\le c$ and $b>\rho$. In the first cycle, the interval is $[(1+\delta)/b,1]$.
 
-For the linear benchmark, the funding identity telescopes to
+The current coefficient $a_i$ is independent of the information used to choose $p_i$. Dividing the objective by the positive constant $\mathbb E[a_i]$ therefore gives expected stage reward $pc=c-u$. Set
 \[
- B_i=c_{i+1}-1,\qquad c_i=1+B_{i-1}.
+ w=\mathbb E[b_i],\qquad v=\mathbb E[b_i d_i],\qquad v\ge w\ge b>\rho>1.
 \]
-Consequently, at any cycle after the first, a current balance $B\ge\delta$ permits exactly the next balances $B'$ satisfying
+Induction shows that the optimal normalized expected value with $m$ cycles remaining has the form
 \[
- \rho B\le B'\le bB+b-1.
+ V_m(c,B)=A_m c+D_m B,\qquad A_0=D_0=0.
 \]
-The intrinsic value earned in that cycle is
+Define $S_m=vA_m+wD_m$. Given the continuation coefficients, the current objective is
 \[
- I=1-\frac1b+B-\frac{B'}b.
+ (1-D_{m-1})c+D_{m-1}B+(S_{m-1}-1)u.
 \]
-The upper endpoint corresponds to $p=0$; the lower endpoint meets the required balance growth exactly.
+Thus the upper endpoint is uniquely optimal when $S_{m-1}>1$. When $S_{m-1}\le1$, choose the lower endpoint, including at a tie. The lower choice gives
+\[
+ \begin{aligned}
+ A_m&=1-D_{m-1}+\frac{S_{m-1}-1}{b},\\
+ D_m&=D_{m-1}+\frac{(\rho-1)(S_{m-1}-1)}{b}.
+ \end{aligned}
+\]
+The upper choice gives
+\[
+ A_m=vA_{m-1}+(w-1)D_{m-1},\qquad D_m=D_{m-1}.
+\]
+These updates establish the claimed linear value function.
 
-Let $V_m(B)$ be the largest total intrinsic value attainable with $m$ cycles remaining and current balance $B\ge\delta$. We show by induction that $V_m$ is affine in $B$, and denote its slope by $A_m$. Since $V_0=0$, $A_0=0$. The recursion is
+\textbf{2. A single switch between phases.} While the lower endpoint is chosen, $D_m\le0$. Direct substitution gives
 \[
- V_m(B)=1-\frac1b+B+
- \max_{\rho B\le B'\le bB+b-1}
- \left\{V_{m-1}(B')-\frac{B'}b\right\}.
+ \begin{aligned}
+ S_m={}&\frac{v+w(\rho-1)}{b}S_{m-1}
+       +\frac{v(b-1)-w(\rho-1)}{b}\\
+       &+(w-v)D_{m-1}
+       \ \ge\ \rho S_{m-1}+b-\rho.
+ \end{aligned}
 \]
-If $V_{m-1}$ is affine, the coefficient of $B'$ is $A_{m-1}-1/b$. Therefore the maximizing choice is the upper endpoint when $A_{m-1}>1/b$, and the lower endpoint when $A_{m-1}<1/b$. At equality, either endpoint is optimal; choose the lower one. Substitution shows that $V_m$ is affine and gives
+Starting from $S_0=0$, this sequence increases until it crosses $1$ in finite time. Let
 \[
- A_m=
- \begin{cases}
- 1-\rho/b+\rho A_{m-1},&A_{m-1}\le1/b,\\
- bA_{m-1},&A_{m-1}>1/b.
- \end{cases}
+ K=\min\{m\ge1:S_m>1\}.
 \]
-Until the threshold is crossed,
+After the crossing, the upper update gives
 \[
- A_m=\frac{b-\rho}{b}\sum_{j=0}^{m-1}\rho^j.
+ S_m=vS_{m-1}+(w-v)D_{m-1}>S_{m-1}>1.
 \]
-Hence $A_{K-1}\le1/b<A_K$. After this crossing, the second branch keeps $A_m>1/b$. It follows that every cycle with more than $K$ cycles remaining has the unique optimal choice of full external focus. With at most $K$ cycles remaining, choosing the lower endpoint is optimal.
+The coefficient $D_m$ then remains fixed and nonpositive. Therefore every decision with more than $K$ cycles remaining uniquely chooses $u=c$, and every later decision admits the lower-endpoint optimum. The first-cycle interval has a different lower endpoint, but the same strictly positive decision coefficient when $n>K$. This proves the phase structure and the displayed allocation formula.
 
-For the first cycle, the feasible interval is $\delta\le B_1\le b-1$. Its objective has coefficient $A_{n-1}-1/b$ on $B_1$. Since $n>K$, this coefficient is strictly positive, so every optimum chooses $B_1=b-1$, equivalently $p_1=0$. The same argument applies to the subsequent cycles with more than $K$ cycles remaining.
+\textbf{3. Monotonicity of the expected proportions.} Write $r=B/c\in[0,1]$. In the mixed phase,
+\[
+ 1-p=\frac{1+(\rho-1)r}{b}.
+\]
+It therefore suffices to prove that the expected reserve-to-budget ratio decreases during that phase, once the preceding full-external phase is long enough.
 
-In the last $K$ cycles, choose $B_i=\rho B_{i-1}$. The formula for $p_i$ follows from $E_i=1+B_i=b(1-p_i)(1+B_{i-1})$. Since $B_{i-1}>0$ and $1<\rho<b$, this share lies strictly between zero and one. This proves the result.\hfill$\square$
+For a fresh draw $(b_i,d_i)$, the two state transitions are
+\[
+ \begin{aligned}
+ F_i(r)&=\frac{r+b_i-1}{b_i d_i}
+       &&\text{under full external allocation},\\
+ G_i(r)&=\frac{1}{d_i}\left(1-\frac{b}{b_i}
+              \frac{1-r}{1+(\rho-1)r}\right)
+       &&\text{under mixed allocation}.
+ \end{aligned}
+\]
+Both maps preserve $[0,1]$ and are strictly increasing. Each $F_i$ contracts distances by at most $1/b<1$. Iterating the iid maps from an independent infinite past gives a stationary distribution $\pi$. Coupling any other initial state to it using the same draws makes their distance at most $b^{-t}$ after $t$ steps.
 
+If $R$ has distribution $\pi$ and is independent of a fresh coefficient draw, stationarity gives
+\[
+ \mathbb E[1-R]=
+ \frac{\mathbb E[1-1/d_i]}{1-\mathbb E[1/(b_i d_i)]}>0.
+\]
+The numerator is positive because $d_i\ge1$ and $\mathbb E[d_i]>1$. Moreover,
+\[
+ F_i(r)-G_i(r)=\frac{1-r}{b_i d_i}
+ \left(\frac{b}{1+(\rho-1)r}-1\right)>0
+ \qquad(r<1).
+\]
+Consequently, applying $G_i$ to a stationary starting state produces a distribution that can be coupled below $\pi$, with a strictly smaller mean. Applying the same subsequent draws preserves strict order, because every $G_i$ is strictly increasing. Thus successive mixed-phase distributions started from $\pi$ have strictly decreasing means.
+
+There are only $K$ mixed cycles. As the full-external prefix length $n-K$ grows, its final state distribution converges to $\pi$. The maps $G_i$ have Lipschitz constants at most $\rho$, so each of these finitely many mixed-phase expectations converges to its stationary-start counterpart. All adjacent limiting differences are strictly positive. They therefore remain positive for every sufficiently long prefix. Choose a finite $N>K$ beyond this point. If $K=1$, there are no mixed-phase comparisons and $N=K+1$ suffices.
+
+At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Finally, the constructed optimal policy uses only the cycle number and the observed pair $(c_i,B_{i-1})$. It remains admissible and optimal when past coefficients are unobserved.\hfill$\square$
 
 \medskip
-\textbf{Build external support early so that the full research trajectory can deliver more intrinsic value.}
+\textbf{Even when intrinsic value is the sole objective, building external support first can be the optimal way to sustain an increasing intrinsic allocation over time in expectation.}
 
 \end{document}

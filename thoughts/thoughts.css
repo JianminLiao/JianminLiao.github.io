@@ -36,6 +36,9 @@ math { font-family: "Cambria Math", "STIX Two Math", math; }
   .theorem { padding: .75rem 1rem; }
   .essay-body h2 { margin-top: 2.25rem; }
 }
+@media (max-width: 380px) {
+  .theorem .equation math { font-size: 1em; }
+}
 @media print {
   .essay-shell { max-width: none; padding: 0; }
   .essay-masthead, .work-links { display: none; }
