@@ -24,7 +24,11 @@
 
 Essay 01（首篇文章）为 `thoughts/research-principle-ai-era.html`，附同名主题的 `research-principle.pdf` 与 `research-principle.tex`。正文以 LaTeX 为源，网页中的数学公式已静态转换为原生 MathML，不需要浏览器加载脚本、字体或第三方服务。更新时同步核对网页、PDF 和源文件中的假设、定理与证明。
 
-定理后包含 400 个逐期变化收益率的确定性情景模拟：每期独立采样 `a_i ∈ [0.9, 1.1]`、`b_i ∈ [1.25, 1.65]`，使用 NumPy `default_rng(20260928)`，先生成完整 a 数组再生成 b 数组；数组形状均为 `(400, 16)`。余额参数为 `rho=1.05`、`delta=0.1`。每条完整序列在优化时已知，用正文中的逆向递推求最优分配。图中仅显示 intrinsic 的投入比例、当期增量和累计值，细线为前 24 条情景，粗线为全部 400 条的均值。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别服务于桌面和手机。正文另给出适用于整个参数范围的保证。文章页面不显示 PDF 或 LaTeX 下载入口。
+定理后是一条确定性的非线性轨迹。三个函数每期均采用 `F_i(x)=a_i*x*(1+q_i*x/(1+x))`：f、g、h 的 a 范围分别为 `[0.9,1.1]`、`[1.25,1.65]`、`[0.85,0.95]`，q 范围均为 `[0.05,0.15]`。所有函数严格递增，并具有统一的正斜率线性上下界。使用 NumPy `default_rng(20260928)`，依次生成三个长度为 16 的 a 数组，再生成形状 `(3,16)` 的 q 数组。余额参数为 `rho=1.05`、`delta=0.1`。
+
+`thoughts/simulation/solve.py` 和 `result.json` 保存可复现实验及完整数值记录。SLSQP 使用解析梯度、17 个初始分配方案优化同一条已知函数序列；16 次报告收敛，收敛结果的目标值一致。一次未报告收敛的尝试保留在记录中，不用于数值结果声明。解析梯度与中心差分核对，最大绝对误差小于 4e-10。数值解满足所有余额约束至浮点误差，数值求解不提供全局最优证书。正文严格区分一般非线性模型、线性特例的精确定理和非线性数值例子。
+
+同一张图中，折线表示 intrinsic 投入比例，整根柱子表示累计 intrinsic，深色顶部表示当期新增部分；没有均值或 external 数值。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别服务于桌面和手机。文章页面不显示 PDF 或 LaTeX 下载入口。
 
 ## 发布配置
 
