@@ -6,7 +6,7 @@ import sys
 
 getcontext().prec = 40
 n = 13
-b, d, rho, delta = map(Decimal, ['1.11', '1.05', '1.05', '0.1'])
+b, d, rho = map(Decimal, ['1.11', '1.05', '1.05'])
 A = D = Decimal(0)
 K = 0
 while d*b*A + b*D <= 1:
@@ -23,13 +23,13 @@ for i in range(1, n+1):
     intrinsic = c-external/b
     next_balance = balance+external-c if i <= n-K else rho*balance
     total += intrinsic
-    assert next_balance >= max(delta, rho*balance)
+    assert next_balance >= rho*balance
     rows.append([float(x) for x in (c, next_balance, p, intrinsic, total)])
     c, balance = d*external, next_balance
 
 result = {
     'model': 'Fixed linear coefficients, a degenerate IID law: f(c)=c, g(c)=b*c, h(e)=d*e',
-    'cycles': n, 'b': float(b), 'd': float(d), 'rho': float(rho), 'delta': float(delta), 'K': K,
+    'cycles': n, 'b': float(b), 'd': float(d), 'rho': float(rho), 'K': K,
     'initial_full_external_cycles': n-K, 'mixed_cycles': K,
     'expenditure': [r[0] for r in rows], 'balance': [r[1] for r in rows],
     'allocation': [r[2] for r in rows], 'intrinsic_increment': [r[3] for r in rows],

@@ -37,21 +37,21 @@ The vectors $(a_i,b_i,d_i)$ are independent and identically distributed across c
 \]
 Thus $b$ is the greatest almost-sure lower bound on the external-return coefficient. The funding conditions mean that external support is fully carried into the next budget and has a positive probability of expanding it. The common distribution stays fixed across cycles, although realized coefficients can change.
 
-\textbf{2. A positive and growing safety balance.} Let the cumulative funding surplus satisfy
+\textbf{2. A growing safety balance.} Let the cumulative funding surplus satisfy
 \[
  B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
 \]
 Require, almost surely in every cycle,
 \[
- B_i\ge\max\{\delta,\rho B_{i-1}\},\qquad 1<\rho<b,\qquad 0<\delta\le b-1.
+ B_i\ge\rho B_{i-1},\qquad 1<\rho<b.
 \]
-The floor $\delta$ establishes a safety reserve, and $\rho$ requires it to grow. The coefficient bound makes the initial reserve feasible and leaves room for intrinsic work. The initial expenditure is supplied as seed funding; balances are assessed at cycle boundaries.
+The multiplier $\rho$ requires any positive reserve to grow. The bound $\rho<b$ makes this requirement feasible and leaves room for intrinsic work. No fixed minimum reserve is imposed. The initial expenditure is supplied as seed funding; balances are assessed at cycle boundaries.
 
-\textbf{3. Decisions before current returns are known.} The researcher observes the current budget and balance and chooses $p_i$ before observing the current coefficients. Past coefficients need not be observed. The common coefficient distribution is known, and the sole objective is
+\textbf{3. Decisions from observed resources.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Realized coefficients are not directly revealed, even after a cycle. The common coefficient distribution is known, and the sole objective is
 \[
  \max\ \mathbb E\!\left[\sum_{i=1}^{n} I_i\right].
 \]
-Each cycle's intrinsic value receives equal weight. External return matters through subsequent funding and the safety constraints. This information structure separates observable resources from uncertain research productivity.
+Each cycle's intrinsic value receives equal weight. External return matters through subsequent funding and the safety constraint. The strategy uses observed resources without estimating or reconstructing past coefficients; information about them that may be inferred from resource records is not needed.
 
 \section*{The optimal allocation}
 
@@ -75,7 +75,7 @@ For this strategy, the expected intrinsic allocation share is nondecreasing:
 Equivalently, the expected external share $1-\mathbb E[p_i]$ is nonincreasing. The strategy requires only the current budget, balance, cycle number, and the known distribution.
 \end{theorem}
 
-The phase structure already holds whenever $n>K$. The possibly larger threshold $N$ ensures monotonicity of the expected proportions. These expectations average over random histories; individual trajectories can fluctuate. Favorable external returns can leave the realized balance above its required minimum.
+The phase structure already holds whenever $n>K$. The first full-external cycle creates a positive reserve, $B_1=b_1-1\ge b-1>0$, which then grows under the safety constraint. The possibly larger threshold $N$ ensures monotonicity of the expected proportions. These expectations average over random histories; individual trajectories can fluctuate. Favorable external returns can leave the realized balance above its required minimum.
 
 \section*{A numerical example}
 
@@ -110,7 +110,7 @@ For a single fixed-coefficient illustration, use
 \[
  a_i=1,\qquad b_i=1.11,\qquad d_i=1.05,
 \]
-with $n=13$, $\rho=1.05$, and $\delta=0.1$. Constant coefficients are a degenerate iid distribution and satisfy $\mathbb E[d_i]>1$. The Bellman recursion below gives $K=10$: three cycles of full external focus, followed by ten cycles of mixed allocation.
+with $n=13$ and $\rho=1.05$. Constant coefficients are a degenerate iid distribution and satisfy $\mathbb E[d_i]>1$. The Bellman recursion below gives $K=10$: three cycles of full external focus, followed by ten cycles of mixed allocation.
 
 Here $d_i=\rho$, so during the mixed phase the reserve-to-budget ratio satisfies
 \[
@@ -124,7 +124,7 @@ The intrinsic share rises from 8.81\% in cycle 4 to 8.92\% in cycle 13. The corr
 
 \section*{Proof}
 
-\textbf{1. Feasible actions and the Bellman recursion.} After the first cycle, the states satisfy $\delta\le B\le c$. Indeed, if $B\le c$, then
+\textbf{1. Feasible actions and the Bellman recursion.} Starting from $(c_1,B_0)=(1,0)$, every feasible state satisfies $0\le B\le c$. Indeed, if $B\le c$, then
 \[
  B'=B+E-c\le E\le d_iE=c'.
 \]
@@ -132,7 +132,7 @@ The safety constraint preserves the lower bound. Write $u=(1-p)c$ for the expend
 \[
  \frac{c+(\rho-1)B}{b}\le u\le c.
 \]
-This follows from the essential lower bound $b$ and the almost-sure safety requirement. The interval has positive length because $B\le c$ and $b>\rho$. In the first cycle, the interval is $[(1+\delta)/b,1]$.
+This follows from the essential lower bound $b$ and the almost-sure safety requirement. The interval has positive length because $B\le c$ and $b>\rho$. The same formula applies in the first cycle, when the interval is $[1/b,1]$.
 
 The current coefficient $a_i$ is independent of the information used to choose $p_i$. Dividing the objective by the positive constant $\mathbb E[a_i]$ therefore gives expected stage reward $pc=c-u$. Set
 \[
@@ -176,7 +176,7 @@ After the crossing, the upper update gives
 \[
  S_m=vS_{m-1}+(w-v)D_{m-1}>S_{m-1}>1.
 \]
-The coefficient $D_m$ then remains fixed and nonpositive. Therefore every decision with more than $K$ cycles remaining uniquely chooses $u=c$, and every later decision admits the lower-endpoint optimum. The first-cycle interval has a different lower endpoint, but the same strictly positive decision coefficient when $n>K$. This proves the phase structure and the displayed allocation formula.
+The coefficient $D_m$ then remains fixed and nonpositive. Therefore every decision with more than $K$ cycles remaining uniquely chooses $u=c$, and every later decision admits the lower-endpoint optimum. This proves the phase structure and the displayed allocation formula, including the first-cycle decision.
 
 \textbf{3. Monotonicity of the expected proportions.} Write $r=B/c\in[0,1]$. In the mixed phase,
 \[
@@ -211,7 +211,7 @@ Consequently, applying $G_i$ to a stationary starting state produces a distribut
 
 There are only $K$ mixed cycles. As the full-external prefix length $n-K$ grows, its final state distribution converges to $\pi$. The maps $G_i$ have Lipschitz constants at most $\rho$, so each of these finitely many mixed-phase expectations converges to its stationary-start counterpart. All adjacent limiting differences are strictly positive. They therefore remain positive for every sufficiently long prefix. Choose a finite $N>K$ beyond this point. If $K=1$, there are no mixed-phase comparisons and $N=K+1$ suffices.
 
-At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Finally, the constructed optimal policy uses only the cycle number and the observed pair $(c_i,B_{i-1})$. It remains admissible and optimal when past coefficients are unobserved.\hfill$\square$
+At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Finally, the constructed optimal policy uses only the cycle number and the observed pair $(c_i,B_{i-1})$. Independent draws make this state sufficient for the Bellman recursion. The policy neither observes nor estimates historical coefficient realizations.\hfill$\square$
 
 \medskip
 \textbf{Even when intrinsic value is the sole objective, building external support first can be the optimal way to sustain an increasing intrinsic allocation over time in expectation.}

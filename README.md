@@ -24,11 +24,11 @@
 
 Essay 01（首篇文章）为 `thoughts/research-principle-ai-era.html`，附同名主题的 `research-principle.pdf` 与 `research-principle.tex`。正文以 LaTeX 为源，网页中的数学公式已静态转换为原生 MathML，不需要浏览器加载脚本、字体或第三方服务。更新时同步核对网页、PDF 和源文件中的假设、定理与证明。
 
-正文采用 iid 随机线性系数模型：先决定分配比例，再产生当期回报；只要求当前预算与余额可观测，过去的真实系数可保持未知。共同分布已知，所有系数有界，external 系数的本质下界大于余额增长率，资金系数至少为 1 且期望严格大于 1。安全余额约束几乎必然满足。在足够长的期限下，存在最优策略先全部投入 external，再转为混合分配，intrinsic 比例的期望非下降。正文分别证明阶段切换与均值单调，不声称每条随机轨迹都单调。
+正文采用 iid 随机线性系数模型：先决定分配比例，再抽取当期系数；只要求当前预算与余额可观测，系数实现值不直接揭示，策略无需估计或重建历史系数。精确的资源记录可能间接透露部分系数，但决策不依赖这些信息。共同分布已知，所有系数有界，external 系数的本质下界大于余额增长率，资金系数至少为 1 且期望严格大于 1。唯一的安全余额约束是 `B_i >= rho B_{i-1}`，其中 `1 < rho < b`，不设固定余额下限。在足够长的期限下，存在最优策略先全部投入 external，再转为混合分配，intrinsic 比例的期望非下降。正文分别证明阶段切换与均值单调，不声称每条随机轨迹都单调。
 
-定理后保留一条固定线性函数的单次示例，这是 iid 定理的退化分布特例：所有 13 期均使用 `f(c)=c`、`g(c)=1.11c`、`h(e)=1.05e`，初始 `c1=1`、`B0=0`，安全余额 `delta=0.1`，余额增长率 `rho=1.05`。Bellman 递推给出 `K=10`，即前 3 期全部投入 external，后 10 期混合分配。由于资金系数恰等于余额增长率，这个特例在 `n>K` 时已满足比例单调。
+定理后保留一条固定线性函数的单次示例，这是 iid 定理的退化分布特例：所有 13 期均使用 `f(c)=c`、`g(c)=1.11c`、`h(e)=1.05e`，初始 `c1=1`、`B0=0`，余额增长率 `rho=1.05`。Bellman 递推给出 `K=10`，即前 3 期全部投入 external，后 10 期混合分配。由于资金系数恰等于余额增长率，这个特例在 `n>K` 时已满足比例单调。
 
-`thoughts/simulation/solve.py` 使用标准库 Decimal 的 40 位精度计算；运行 `python3 thoughts/simulation/solve.py` 可重建同目录 `result.json`。同一张图中，折线表示 intrinsic 投入比例，整根柱子表示累计 intrinsic，深色顶部表示当期新增部分。第 4 期和第 13 期的 intrinsic 比例分别为 8.81% 和 8.92%，当期增量分别为 0.1394 和 0.2431，最终累计值为 1.8722。所有期均满足两项余额约束。图中没有 external 数值，也没有多次模拟或平均线。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别用于桌面和手机。文章页面不显示 PDF 或 LaTeX 下载入口。
+`thoughts/simulation/solve.py` 使用标准库 Decimal 的 40 位精度计算；运行 `python3 thoughts/simulation/solve.py` 可重建同目录 `result.json`。同一张图中，折线表示 intrinsic 投入比例，整根柱子表示累计 intrinsic，深色顶部表示当期新增部分。第 4 期和第 13 期的 intrinsic 比例分别为 8.81% 和 8.92%，当期增量分别为 0.1394 和 0.2431，最终累计值为 1.8722。所有期均满足乘数余额约束。图中没有 external 数值，也没有多次模拟或平均线。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别用于桌面和手机。文章页面不显示 PDF 或 LaTeX 下载入口。
 
 ## 发布配置
 
