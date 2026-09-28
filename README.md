@@ -24,6 +24,8 @@
 
 Essay 01（首篇文章）为 `thoughts/research-principle-ai-era.html`，附同名主题的 `research-principle.pdf` 与 `research-principle.tex`。正文以 LaTeX 为源，网页中的数学公式已静态转换为原生 MathML，不需要浏览器加载脚本、字体或第三方服务。更新时同步核对网页、PDF 和源文件中的假设、定理与证明。
 
+定理后包含 400 个逐期变化收益率的确定性情景模拟：每期独立采样 `a_i ∈ [0.9, 1.1]`、`b_i ∈ [1.25, 1.65]`，使用 NumPy `default_rng(20260928)`，先生成完整 a 数组再生成 b 数组；数组形状均为 `(400, 16)`。余额参数为 `rho=1.05`、`delta=0.1`。每条完整序列在优化时已知，用正文中的逆向递推求最优分配。图中仅显示 intrinsic 的投入比例、当期增量和累计值，细线为前 24 条情景，粗线为全部 400 条的均值。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别服务于桌面和手机。正文另给出适用于整个参数范围的保证。文章页面不显示 PDF 或 LaTeX 下载入口。
+
 ## 发布配置
 
 Settings → Pages → Build and deployment：选择 Deploy from a branch，main，/ (root)。确认 Enforce HTTPS。.nojekyll 让 GitHub 直接发布静态文件。
