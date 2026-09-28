@@ -34,8 +34,7 @@ result = {
     'expenditure': [r[0] for r in rows], 'balance': [r[1] for r in rows],
     'allocation': [r[2] for r in rows], 'intrinsic_increment': [r[3] for r in rows],
     'cumulative_intrinsic': [r[4] for r in rows],
-    'optimality': 'Bellman threshold and optimal policy computed with 40-digit Decimal arithmetic.',
-    'monotonicity': 'Here d=rho, so the reserve-to-budget ratio strictly decreases in every mixed cycle.'
+    'optimality': 'Bellman threshold and optimal policy computed with 40-digit Decimal arithmetic.'
 }
 (Path(sys.argv[1]) if len(sys.argv)>1 else Path(__file__).with_name('result.json')).write_text(json.dumps(result, indent=2)+'\n')
 print(json.dumps({'cycles': n, 'K': K, 'initial_external': n-K,

@@ -17,65 +17,49 @@
 \begin{document}
 \maketitle
 
-\textbf{Research in the AI era should pursue intrinsic value while building the external support needed to sustain that pursuit.}
+\textbf{Research should pursue intrinsic value while first building the external support needed to sustain it.}
 
-Under the assumptions below, maximizing expected intrinsic value requires an initial phase devoted entirely to external return. An optimal strategy then mixes intrinsic and external work. With enough time, its expected intrinsic allocation share is nondecreasing, even when returns vary randomly across cycles.
+For a sufficiently long research horizon, the model below gives a precise conclusion: even when intrinsic value is the only objective, every optimal strategy begins by allocating all resources to external value.
 
-Intrinsic value means the scientific understanding or other substantive contribution that the researcher ultimately values. External return means support convertible into research funding, measured in the same units as expenditure. The model treats external support as a means of sustaining research.
+Intrinsic value is the scientific contribution the researcher ultimately values. External value is support convertible into research funding, measured in the same units as expenditure.
 
 \section*{Assumptions}
 
-Consider $n$ research cycles. In cycle $i$, let $c_i$ be expenditure and $p_i\in[0,1]$ the fraction allocated to intrinsic work. Normalize the initial expenditure to $c_1=1$.
+Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$.
 
-\textbf{1. Linear returns with iid random coefficients.} Intrinsic value, external return, and the next research budget satisfy
+\textbf{1. Linear returns.} Intrinsic value, external value, and the next budget satisfy
 \[
- I_i=a_i p_i c_i,\qquad E_i=b_i(1-p_i)c_i,\qquad c_{i+1}=d_i E_i.
+ I_i=a_i p_i c_i,\qquad E_i=b_i(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
 \]
-The vectors $(a_i,b_i,d_i)$ are independent and identically distributed across cycles. Their components may be dependent within a cycle. All coefficients have finite upper bounds, and $a_i$ has a strictly positive lower bound. Write
+The vectors $(a_i,b_i,d_i)$ are iid across cycles. All coefficients are bounded above, and $a_i$ has a positive lower bound. Write
 \[
- b=\operatorname{ess\,inf} b_i,\qquad d_i\ge1\ \text{almost surely},\qquad \mathbb E[d_i]>1.
+ b=\operatorname{ess\,inf}b_i,\qquad d_i\ge1\ \text{almost surely}.
 \]
-Thus $b$ is the greatest almost-sure lower bound on the external-return coefficient. The funding conditions mean that external support is fully carried into the next budget and has a positive probability of expanding it. The common distribution stays fixed across cycles, although realized coefficients can change.
+External support is fully carried into the next research budget.
 
-\textbf{2. A growing safety balance.} Let the cumulative funding surplus satisfy
+\textbf{2. A growing reserve.} The funding balance obeys
 \[
- B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
+ B_0=0,\qquad B_i=B_{i-1}+E_i-c_i,
 \]
-Require, almost surely in every cycle,
+with the requirement
 \[
- B_i\ge\rho B_{i-1},\qquad 1<\rho<b.
+ B_i\ge\rho B_{i-1}\ \text{almost surely},\qquad 1<\rho<b.
 \]
-The multiplier $\rho$ requires any positive reserve to grow. The bound $\rho<b$ makes this requirement feasible and leaves room for intrinsic work. No fixed minimum reserve is imposed. The initial expenditure is supplied as seed funding; balances are assessed at cycle boundaries.
+Research income must cover spending while growing the reserve.
 
-\textbf{3. Decisions with limited distributional information.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Realized coefficients are not directly revealed, even after a cycle. The common distribution need not be known: only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known. The sole objective is
+\textbf{3. Intrinsic value as the sole objective.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Coefficient realizations are not directly revealed. Only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known about the common distribution. The objective is
 \[
- \max\ \mathbb E\!\left[\sum_{i=1}^{n} I_i\right].
+ \max\ \mathbb E\!\left[\sum_{i=1}^{n}I_i\right].
 \]
-Each cycle's intrinsic value receives equal weight. External return matters through subsequent funding and the safety constraint. The strategy uses observed resources without estimating or reconstructing past coefficients; information about them that may be inferred from resource records is not needed.
 
-\section*{The optimal allocation}
+\section*{The result}
 
 \begin{theorem}
-Under these assumptions, there is a finite integer $K\ge1$, determined by $\rho$ and the three known quantities. For each admissible common distribution, there is a finite integer $N>K$ such that, for every horizon $n\ge N$, every optimal strategy devotes its first $n-K$ cycles entirely to external return:
+There is a finite integer $K\ge1$, independent of the horizon $n$, such that whenever $n>K$, every optimal strategy allocates all resources to external value in the first $n-K$ cycles:
 \[
- p_i=0\qquad(1\le i\le n-K).
+ p_i=0\qquad(1\le i\le n-K),\quad\text{almost surely}.
 \]
-There is an optimal strategy that then uses the minimum external share needed to guarantee the safety balance:
-\[
- p_i=1-\frac{c_i+(\rho-1)B_{i-1}}{b c_i}\in(0,1)
- \qquad(n-K<i\le n).
-\]
-For this strategy, the expected intrinsic allocation share is nondecreasing:
-\[
- \begin{aligned}
- 0&=\mathbb E[p_1]=\cdots=\mathbb E[p_{n-K}],\\
- 0&<\mathbb E[p_{n-K+1}]\le\cdots\le\mathbb E[p_n].
- \end{aligned}
-\]
-Equivalently, the expected external share $1-\mathbb E[p_i]$ is nonincreasing. Given $n$ and $\rho$, the strategy uses only the three known quantities, the cycle number, and the current budget and balance.
 \end{theorem}
-
-The phase structure already holds whenever $n>K$. The first full-external cycle creates a positive reserve, $B_1=b_1-1\ge b-1>0$, which then grows under the safety constraint. The threshold $N$ ensures monotonicity of the expected proportions and may depend on the unknown distribution; it is not needed to execute the policy. The theorem does not give a common $N$ for all admissible distributions. Individual trajectories can fluctuate, and favorable external returns can leave the balance above its required minimum.
 
 \section*{A numerical example}
 
@@ -103,117 +87,54 @@ ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\
 \addplot[blue!65!black,very thick,mark=*,mark size=1.5pt] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,8.80704) (5,8.82038) (6,8.83339) (7,8.84611) (8,8.85852) (9,8.87065) (10,8.88250) (11,8.89409) (12,8.90541) (13,8.91649)};
 \end{axis}
 \end{tikzpicture}
-\caption{An optimal trajectory with the same fixed linear functions in every cycle: three cycles of full external focus, followed by ten cycles of mixed allocation. The line shows the intrinsic allocation share (left axis). Each full bar shows cumulative intrinsic value (right axis); its darker segment is the intrinsic value added in that cycle, and its lighter segment is the value accumulated in earlier cycles.}
+\caption{An optimal allocation: the first three cycles produce no intrinsic value because all resources go to external work. The line shows the intrinsic allocation share. Each bar shows cumulative intrinsic value, with the current increment highlighted.}
 \end{figure}
 
-For a single fixed-coefficient illustration, use
-\[
- a_i=1,\qquad b_i=1.11,\qquad d_i=1.05,
-\]
-with $n=13$ and $\rho=1.05$. Constant coefficients are a degenerate iid distribution and satisfy $\mathbb E[d_i]>1$. The Bellman recursion below gives $K=10$: three cycles of full external focus, followed by ten cycles of mixed allocation.
-
-Here $d_i=\rho$, so during the mixed phase the reserve-to-budget ratio satisfies
-\[
- \frac{B_i}{c_{i+1}}=
- \frac{B_{i-1}/c_i}{1+(\rho-1)B_{i-1}/c_i}
- <\frac{B_{i-1}}{c_i}.
-\]
-Consequently, the intrinsic share increases throughout this phase. For these fixed coefficients, monotonicity already holds for every $n>K$.
-
-The intrinsic share rises from 8.81\% in cycle 4 to 8.92\% in cycle 13. The corresponding intrinsic increments are 0.1394 and 0.2431, and cumulative intrinsic value reaches 1.8722. This is one deterministic trajectory with no averaging. The same figure combines the allocation line with cumulative-value bars whose darker portions show the current increments.
+Take $n=13$, $a_i=1$, $b_i=1.11$, and $d_i=\rho=1.05$ in every cycle. Here $K=10$: maximizing total intrinsic value begins with three cycles devoted entirely to external value.
 
 \section*{Proof}
 
-\textbf{1. Feasible actions and the Bellman recursion.} Starting from $(c_1,B_0)=(1,0)$, every feasible state satisfies $0\le B\le c$. Indeed, if $B\le c$, then
+Every feasible state satisfies $0\le B\le c$: this holds initially and is preserved because
 \[
- B'=B+E-c\le E\le d_iE=c'.
+ 0\le B'=B+E-c\le E\le d_iE=c'.
 \]
-The safety constraint preserves the lower bound. Write $u=(1-p)c$ for the expenditure allocated to external work. At a state $(c,B)$, its feasible interval is exactly
+Write $u=(1-p)c$ for external expenditure. The reserve constraint gives the feasible interval
 \[
  \frac{c+(\rho-1)B}{b}\le u\le c.
 \]
-This follows from the essential lower bound $b$ and the almost-sure safety requirement. The interval has positive length because $B\le c$ and $b>\rho$. The same formula applies in the first cycle, when the interval is $[1/b,1]$.
 
-The current coefficient $a_i$ is independent of the information used to choose $p_i$. Dividing the objective by the positive constant $\mathbb E[a_i]$ therefore gives expected stage reward $pc=c-u$. This normalization does not change the optimizer, so the researcher need not know $\mathbb E[a_i]$. Set
+Independence lets us divide the objective by the positive constant $\mathbb E[a_i]$, giving stage reward $c-u$. Set
 \[
  w=\mathbb E[b_i],\qquad v=\mathbb E[b_i d_i],\qquad v\ge w\ge b>\rho>1.
 \]
-Induction shows that the optimal normalized expected value with $m$ cycles remaining has the form
-\[
- V_m(c,B)=A_m c+D_m B,\qquad A_0=D_0=0.
-\]
-Define $S_m=vA_m+wD_m$. Given the continuation coefficients, the current objective is
+The value function with $m$ cycles remaining is linear: $V_m(c,B)=A_m c+D_m B$, with $A_0=D_0=0$. To see this, define $S_m=vA_m+wD_m$. The Bellman objective is
 \[
  (1-D_{m-1})c+D_{m-1}B+(S_{m-1}-1)u.
 \]
-Thus the upper endpoint is uniquely optimal when $S_{m-1}>1$. When $S_{m-1}\le1$, choose the lower endpoint, including at a tie. The lower choice gives
-\[
- \begin{aligned}
- A_m&=1-D_{m-1}+\frac{S_{m-1}-1}{b},\\
- D_m&=D_{m-1}+\frac{(\rho-1)(S_{m-1}-1)}{b}.
- \end{aligned}
-\]
-The upper choice gives
-\[
- A_m=vA_{m-1}+(w-1)D_{m-1},\qquad D_m=D_{m-1}.
-\]
-These updates establish the claimed linear value function. The recursion uses only $b,w,v,$ and $\rho$, so every admissible distribution with the same three known quantities admits the same optimal policy.
+Its maximizing endpoint depends only on $S_{m-1}$, and both endpoints are linear in $(c,B)$, completing the induction.
 
-\textbf{2. A single switch between phases.} While the lower endpoint is chosen, $D_m\le0$. Direct substitution gives
+When $S_{m-1}\le1$, choose the lower endpoint. Starting from $S_0=D_0=0$, this gives
+\[
+ D_m=D_{m-1}+\frac{(\rho-1)(S_{m-1}-1)}{b}\le0
+\]
+and
 \[
  \begin{aligned}
  S_m={}&\frac{v+w(\rho-1)}{b}S_{m-1}
-       +\frac{v(b-1)-w(\rho-1)}{b}\\
-       &+(w-v)D_{m-1}
-       \ \ge\ \rho S_{m-1}+b-\rho.
+ +\frac{v(b-1)-w(\rho-1)}{b}\\
+ &+(w-v)D_{m-1}
+ \ \ge\ \rho S_{m-1}+b-\rho.
  \end{aligned}
 \]
-Starting from $S_0=0$, this sequence increases until it crosses $1$ in finite time. Let
-\[
- K=\min\{m\ge1:S_m>1\}.
-\]
-After the crossing, the upper update gives
+Since $\rho>1$ and $b>\rho$, this sequence crosses $1$ in finite time. Let $K=\min\{m\ge1:S_m>1\}$.
+
+Once $S_{m-1}>1$, the unique maximizing choice is $u=c$. Then $D_m=D_{m-1}\le0$ and
 \[
  S_m=vS_{m-1}+(w-v)D_{m-1}>S_{m-1}>1.
 \]
-The coefficient $D_m$ then remains fixed and nonpositive. Therefore every decision with more than $K$ cycles remaining uniquely chooses $u=c$, and every later decision admits the lower-endpoint optimum. This proves the phase structure and the displayed allocation formula, including the first-cycle decision.
-
-\textbf{3. Monotonicity of the expected proportions.} Write $r=B/c\in[0,1]$. In the mixed phase,
-\[
- 1-p=\frac{1+(\rho-1)r}{b}.
-\]
-It therefore suffices to prove that the expected reserve-to-budget ratio decreases during that phase, once the preceding full-external phase is long enough.
-
-For a fresh draw $(b_i,d_i)$, the two state transitions are
-\[
- \begin{aligned}
- F_i(r)&=\frac{r+b_i-1}{b_i d_i}
-       &&\text{under full external allocation},\\
- G_i(r)&=\frac{1}{d_i}\left(1-\frac{b}{b_i}
-              \frac{1-r}{1+(\rho-1)r}\right)
-       &&\text{under mixed allocation}.
- \end{aligned}
-\]
-Both maps preserve $[0,1]$ and are strictly increasing. Each $F_i$ contracts distances by at most $1/b<1$. Iterating the iid maps from an independent infinite past gives a stationary distribution $\pi$. Coupling any other initial state to it using the same draws makes their distance at most $b^{-t}$ after $t$ steps.
-
-If $R$ has distribution $\pi$ and is independent of a fresh coefficient draw, stationarity gives
-\[
- \mathbb E[1-R]=
- \frac{\mathbb E[1-1/d_i]}{1-\mathbb E[1/(b_i d_i)]}>0.
-\]
-The numerator is positive because $d_i\ge1$ and $\mathbb E[d_i]>1$. Moreover,
-\[
- F_i(r)-G_i(r)=\frac{1-r}{b_i d_i}
- \left(\frac{b}{1+(\rho-1)r}-1\right)>0
- \qquad(r<1).
-\]
-Consequently, applying $G_i$ to a stationary starting state produces a distribution that can be coupled below $\pi$, with a strictly smaller mean. Applying the same subsequent draws preserves strict order, because every $G_i$ is strictly increasing. Thus successive mixed-phase distributions started from $\pi$ have strictly decreasing means.
-
-There are only $K$ mixed cycles. As the full-external prefix length $n-K$ grows, its final state distribution converges to $\pi$. The maps $G_i$ have Lipschitz constants at most $\rho$, so each of these finitely many mixed-phase expectations converges to its stationary-start counterpart. All adjacent limiting differences are strictly positive. They therefore remain positive for every sufficiently long prefix. Choose a finite $N>K$ beyond this point. If $K=1$, there are no mixed-phase comparisons and $N=K+1$ suffices.
-
-At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Independent draws make the current budget and balance sufficient for the Bellman recursion. Computing $K$ and executing the policy require only $b,w,v,$ and $\rho$, together with the horizon, cycle number, and observed state. Neither the full distribution nor historical coefficient realizations are required.\hfill$\square$
+Thus every decision with more than $K$ cycles remaining uniquely allocates everything to external value. These are precisely the first $n-K$ cycles.\hfill$\square$
 
 \medskip
-\textbf{Even when intrinsic value is the sole objective, building external support first can be the optimal way to sustain an increasing intrinsic allocation over time in expectation.}
+\textbf{Even when only intrinsic value matters, the optimal starting allocation is entirely external.}
 
 \end{document}

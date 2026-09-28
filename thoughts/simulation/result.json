@@ -82,6 +82,5 @@
     1.6290512026778725,
     1.8721745333633868
   ],
-  "optimality": "Bellman threshold and optimal policy computed with 40-digit Decimal arithmetic.",
-  "monotonicity": "Here d=rho, so the reserve-to-budget ratio strictly decreases in every mixed cycle."
+  "optimality": "Bellman threshold and optimal policy computed with 40-digit Decimal arithmetic."
 }
