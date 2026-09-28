@@ -2,6 +2,7 @@
 .essay-masthead { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line); font-size: .9375rem; }
 .essay-masthead a { text-decoration: none; }
 .essay-masthead a:first-child { color: var(--ink); font-weight: 650; }
+.essay-masthead a:last-child { max-width: 65%; text-align: right; }
 .essay-header { padding: 3.5rem 0 2.25rem; }
 .essay-header h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); line-height: 1.12; max-width: 18ch; }
 .essay-meta { color: var(--muted); font-size: .9375rem; margin: 1.5rem 0 0; }
