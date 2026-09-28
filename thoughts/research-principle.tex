@@ -19,7 +19,7 @@
 
 \textbf{Research in the AI era should pursue intrinsic value while building the external support needed to sustain that pursuit.}
 
-Even when intrinsic value is the sole objective, an initial phase devoted entirely to external return can be necessary for optimal research. We prove this for a linear benchmark with a sufficiently long horizon, then illustrate the same pattern in one numerical example with nonlinear functions that change in every cycle.
+Even when intrinsic value is the sole objective, an initial phase devoted entirely to external return can be necessary for optimal research. We prove this for a linear benchmark with a sufficiently long horizon, then illustrate the optimal strategy using the same fixed linear functions in every cycle.
 
 Here, intrinsic value means the scientific understanding or other substantive contribution that the researcher ultimately values. External return means support convertible into research funding, measured in the same units as expenditure. The distinction separates the purpose of research from the resources that sustain it.
 
@@ -86,43 +86,38 @@ Thus, maximizing intrinsic value alone requires an initial phase of full externa
 \centering
 \begin{tikzpicture}
 \begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=0.5,xmax=16.5,ymin=0,ymax=550,axis y line*=right,axis x line*=bottom,
-xtick={1,4,7,10,13,16},ytick={0,100,200,300,400,500},
+xmin=0.5,xmax=16.5,ymin=0,ymax=2,axis y line*=right,axis x line*=bottom,
+xtick={1,4,7,10,13,16},ytick={0,0.5,1,1.5,2},
 xlabel={Research cycle},ylabel={Cumulative intrinsic value},
 tick label style={font=\small},label style={font=\small},
 ybar stacked,bar width=8pt,legend style={at={(0.02,0.98)},anchor=north west,
 font=\small,draw=none,fill=none}]
-\addplot[draw=none,fill=green!12!gray!20] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.00000) (6,0.00000) (7,0.00000) (8,0.00000) (9,0.00000) (10,0.00000) (11,0.00000) (12,0.00000) (13,0.00000) (14,0.00000) (15,0.00000) (16,262.83616)};
+\addplot[draw=none,fill=green!12!gray!20] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.11897) (6,0.23894) (7,0.35994) (8,0.48205) (9,0.60530) (10,0.72976) (11,0.85549) (12,0.98255) (13,1.11101) (14,1.24094) (15,1.37241) (16,1.50549)};
 \addlegendentry{Value from earlier cycles}
-\addplot[draw=none,fill=teal!75] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.00000) (6,0.00000) (7,0.00000) (8,0.00000) (9,0.00000) (10,0.00000) (11,0.00000) (12,0.00000) (13,0.00000) (14,0.00000) (15,262.83616) (16,205.35113)};
+\addplot[draw=none,fill=teal!75] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.11897) (5,0.11996) (6,0.12101) (7,0.12210) (8,0.12325) (9,0.12446) (10,0.12573) (11,0.12706) (12,0.12846) (13,0.12993) (14,0.13147) (15,0.13309) (16,0.13479)};
 \addlegendentry{Added this cycle}
 \addlegendimage{line legend,blue!65!black,very thick,mark=*}
 \addlegendentry{Intrinsic allocation (left axis)}
 \end{axis}
 \begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=0.5,xmax=16.5,ymin=0,ymax=50,axis y line*=left,axis x line=none,xtick=\empty,
-ytick={0,10,20,30,40,50},yticklabel={\pgfmathprintnumber{\tick}\%},
+xmin=0.5,xmax=16.5,ymin=0,ymax=14,axis y line*=left,axis x line=none,xtick=\empty,
+ytick={0,2,4,6,8,10,12,14},yticklabel={\pgfmathprintnumber{\tick}\%},
 ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\small}]
-\addplot[blue!65!black,very thick,mark=*,mark size=1.5pt] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,0.00000) (5,0.00000) (6,0.00000) (7,0.00000) (8,0.00000) (9,0.00000) (10,0.00000) (11,0.00000) (12,0.00000) (13,0.00000) (14,0.00000) (15,41.69241) (16,34.67287)};
+\addplot[blue!65!black,very thick,mark=*,mark size=1.5pt] coordinates {(1,0.00000) (2,0.00000) (3,0.00000) (4,8.69906) (5,8.65538) (6,8.61074) (7,8.56518) (8,8.51871) (9,8.47136) (10,8.42317) (11,8.37418) (12,8.32442) (13,8.27394) (14,8.22278) (15,8.17099) (16,8.11862)};
 \end{axis}
 \end{tikzpicture}
-\caption{One numerically optimized trajectory with three nonlinear functions changing in every cycle. The line shows the intrinsic allocation share (left axis). Each full bar shows cumulative intrinsic value (right axis); its darker segment is the intrinsic value added in that cycle, and its lighter segment is the value accumulated in earlier cycles.}
+\caption{An optimal trajectory with the same fixed linear functions in every cycle: three cycles of full external focus, followed by thirteen cycles of mixed allocation. The line shows the intrinsic allocation share (left axis). Each full bar shows cumulative intrinsic value (right axis); its darker segment is the intrinsic value added in that cycle, and its lighter segment is the value accumulated in earlier cycles.}
 \end{figure}
 
-We use one fixed sequence of nonlinear functions with $n=16$, $\rho=1.05$, and $\delta=0.1$. Every $f_i$, $g_i$, and $h_i$ has the form
+Use the same three linear functions in all sixteen cycles:
 \[
- F_i(x)=a_i x\left(1+q_i\frac{x}{1+x}\right),\qquad 0.05\le q_i\le0.15.
+ f_i(c)=c,\qquad g_i(c)=1.11c,\qquad h_i(e)=e,
 \]
-The coefficients $a_i$ lie in $[0.9,1.1]$ for $f_i$, $[1.25,1.65]$ for $g_i$, and $[0.85,0.95]$ for $h_i$. Both coefficients vary across cycles and across the three function families. For every $x\ge0$,
-\[
- a_i x\le F_i(x)\le a_i(1+q_i)x,\qquad
- F_i'(x)=a_i\left[1+q_i\left(1-\frac{1}{(1+x)^2}\right)\right]>0.
-\]
-Thus these are strictly increasing nonlinear functions between strictly increasing linear bounds. Uniform lower and upper slopes are $0.9$ and $1.265$ for $f_i$, $1.25$ and $1.8975$ for $g_i$, and $0.85$ and $1.0925$ for $h_i$.
+with $c_1=1$, $B_0=0$, $\delta=0.1$, and $\rho=1.05$. The theorem gives $K=13$, so the optimal strategy has a short initial phase of three cycles devoted entirely to external return, followed by thirteen cycles of mixed allocation.
 
-The coefficients are generated once with seed 20260928 and then held fixed and known throughout the optimization. A constrained numerical solver yields full external focus for cycles 1--14. The intrinsic allocation shares in cycles 15 and 16 are 41.7\% and 34.7\%; the corresponding intrinsic increments are 262.84 and 205.35, giving a final total of 468.19 in normalized intrinsic-value units. The safety floor and balance-growth constraints hold throughout this trajectory.
+During cycles 1--3, $p_i=0$ and $B_i=1.11^i-1$. During cycles 4--16, the balance grows by exactly 5\% each cycle, and the allocation follows the theorem's formula. The intrinsic share is 8.70\% in cycle 4 and 8.12\% in cycle 16. Although this share decreases slightly as the safety balance grows, the larger research budget raises the intrinsic increment from 0.1190 to 0.1348. Cumulative intrinsic value reaches 1.6403 in normalized units.
 
-This is one numerical illustration of the nonlinear model. The exact theorem above concerns the linear benchmark; the numerical solution does not establish a general theorem or certify global optimality for the nonlinear model.
+The figure displays this single optimal trajectory. No functions or coefficients change across cycles, and no averaging is used. The fixed safety floor and balance-growth requirement hold in every cycle.
 
 \section*{Proof}
 

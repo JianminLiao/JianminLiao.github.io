@@ -24,11 +24,9 @@
 
 Essay 01（首篇文章）为 `thoughts/research-principle-ai-era.html`，附同名主题的 `research-principle.pdf` 与 `research-principle.tex`。正文以 LaTeX 为源，网页中的数学公式已静态转换为原生 MathML，不需要浏览器加载脚本、字体或第三方服务。更新时同步核对网页、PDF 和源文件中的假设、定理与证明。
 
-定理后是一条确定性的非线性轨迹。三个函数每期均采用 `F_i(x)=a_i*x*(1+q_i*x/(1+x))`：f、g、h 的 a 范围分别为 `[0.9,1.1]`、`[1.25,1.65]`、`[0.85,0.95]`，q 范围均为 `[0.05,0.15]`。所有函数严格递增，并具有统一的正斜率线性上下界。使用 NumPy `default_rng(20260928)`，依次生成三个长度为 16 的 a 数组，再生成形状 `(3,16)` 的 q 数组。余额参数为 `rho=1.05`、`delta=0.1`。
+定理后展示一条固定线性函数的最优轨迹：所有 16 期均使用 `f(c)=c`、`g(c)=1.11c`、`h(e)=e`，初始 `c1=1`、`B0=0`，安全余额 `delta=0.1`，余额增长率 `rho=1.05`。定理给出 `K=13`，即前 3 期全部投入 external，后 13 期混合分配。`thoughts/simulation/solve.py` 使用 Python 标准库 Decimal 的 40 位精度按定理计算，`result.json` 保存全部数值；不需要数值优化、随机采样或多次模拟。
 
-`thoughts/simulation/solve.py` 和 `result.json` 保存可复现实验及完整数值记录。SLSQP 使用解析梯度、17 个初始分配方案优化同一条已知函数序列；16 次报告收敛，收敛结果的目标值一致。一次未报告收敛的尝试保留在记录中，不用于数值结果声明。解析梯度与中心差分核对，最大绝对误差小于 4e-10。数值解满足所有余额约束至浮点误差，数值求解不提供全局最优证书。正文严格区分一般非线性模型、线性特例的精确定理和非线性数值例子。
-
-同一张图中，折线表示 intrinsic 投入比例，整根柱子表示累计 intrinsic，深色顶部表示当期新增部分；没有均值或 external 数值。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别服务于桌面和手机。文章页面不显示 PDF 或 LaTeX 下载入口。
+同一张图中，折线表示 intrinsic 投入比例，整根柱子表示累计 intrinsic，深色顶部表示当期新增部分。第 4 期和第 16 期的 intrinsic 比例分别为 8.70% 和 8.12%，当期增量分别为 0.1190 和 0.1348，最终累计值为 1.6403。所有期均满足固定安全余额和余额增长约束。`assets/research-simulation.svg` 和 `assets/research-simulation-mobile.svg` 分别用于桌面和手机。一般函数包夹模型与线性特例定理的区分保留；本例严格属于线性定理的范围。文章页面不显示 PDF 或 LaTeX 下载入口。
 
 ## 发布配置
 
