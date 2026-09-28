@@ -47,7 +47,7 @@ Require, almost surely in every cycle,
 \]
 The multiplier $\rho$ requires any positive reserve to grow. The bound $\rho<b$ makes this requirement feasible and leaves room for intrinsic work. No fixed minimum reserve is imposed. The initial expenditure is supplied as seed funding; balances are assessed at cycle boundaries.
 
-\textbf{3. Decisions from observed resources.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Realized coefficients are not directly revealed, even after a cycle. The common coefficient distribution is known, and the sole objective is
+\textbf{3. Decisions with limited distributional information.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Realized coefficients are not directly revealed, even after a cycle. The common distribution need not be known: only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known. The sole objective is
 \[
  \max\ \mathbb E\!\left[\sum_{i=1}^{n} I_i\right].
 \]
@@ -56,7 +56,7 @@ Each cycle's intrinsic value receives equal weight. External return matters thro
 \section*{The optimal allocation}
 
 \begin{theorem}
-Under these assumptions, there are finite integers $1\le K<N$, depending on the common distribution and the model parameters, with the following property. For every horizon $n\ge N$, every optimal strategy devotes its first $n-K$ cycles entirely to external return:
+Under these assumptions, there is a finite integer $K\ge1$, determined by $\rho$ and the three known quantities. For each admissible common distribution, there is a finite integer $N>K$ such that, for every horizon $n\ge N$, every optimal strategy devotes its first $n-K$ cycles entirely to external return:
 \[
  p_i=0\qquad(1\le i\le n-K).
 \]
@@ -72,10 +72,10 @@ For this strategy, the expected intrinsic allocation share is nondecreasing:
  0&<\mathbb E[p_{n-K+1}]\le\cdots\le\mathbb E[p_n].
  \end{aligned}
 \]
-Equivalently, the expected external share $1-\mathbb E[p_i]$ is nonincreasing. The strategy requires only the current budget, balance, cycle number, and the known distribution.
+Equivalently, the expected external share $1-\mathbb E[p_i]$ is nonincreasing. Given $n$ and $\rho$, the strategy uses only the three known quantities, the cycle number, and the current budget and balance.
 \end{theorem}
 
-The phase structure already holds whenever $n>K$. The first full-external cycle creates a positive reserve, $B_1=b_1-1\ge b-1>0$, which then grows under the safety constraint. The possibly larger threshold $N$ ensures monotonicity of the expected proportions. These expectations average over random histories; individual trajectories can fluctuate. Favorable external returns can leave the realized balance above its required minimum.
+The phase structure already holds whenever $n>K$. The first full-external cycle creates a positive reserve, $B_1=b_1-1\ge b-1>0$, which then grows under the safety constraint. The threshold $N$ ensures monotonicity of the expected proportions and may depend on the unknown distribution; it is not needed to execute the policy. The theorem does not give a common $N$ for all admissible distributions. Individual trajectories can fluctuate, and favorable external returns can leave the balance above its required minimum.
 
 \section*{A numerical example}
 
@@ -134,7 +134,7 @@ The safety constraint preserves the lower bound. Write $u=(1-p)c$ for the expend
 \]
 This follows from the essential lower bound $b$ and the almost-sure safety requirement. The interval has positive length because $B\le c$ and $b>\rho$. The same formula applies in the first cycle, when the interval is $[1/b,1]$.
 
-The current coefficient $a_i$ is independent of the information used to choose $p_i$. Dividing the objective by the positive constant $\mathbb E[a_i]$ therefore gives expected stage reward $pc=c-u$. Set
+The current coefficient $a_i$ is independent of the information used to choose $p_i$. Dividing the objective by the positive constant $\mathbb E[a_i]$ therefore gives expected stage reward $pc=c-u$. This normalization does not change the optimizer, so the researcher need not know $\mathbb E[a_i]$. Set
 \[
  w=\mathbb E[b_i],\qquad v=\mathbb E[b_i d_i],\qquad v\ge w\ge b>\rho>1.
 \]
@@ -157,7 +157,7 @@ The upper choice gives
 \[
  A_m=vA_{m-1}+(w-1)D_{m-1},\qquad D_m=D_{m-1}.
 \]
-These updates establish the claimed linear value function.
+These updates establish the claimed linear value function. The recursion uses only $b,w,v,$ and $\rho$, so every admissible distribution with the same three known quantities admits the same optimal policy.
 
 \textbf{2. A single switch between phases.} While the lower endpoint is chosen, $D_m\le0$. Direct substitution gives
 \[
@@ -211,7 +211,7 @@ Consequently, applying $G_i$ to a stationary starting state produces a distribut
 
 There are only $K$ mixed cycles. As the full-external prefix length $n-K$ grows, its final state distribution converges to $\pi$. The maps $G_i$ have Lipschitz constants at most $\rho$, so each of these finitely many mixed-phase expectations converges to its stationary-start counterpart. All adjacent limiting differences are strictly positive. They therefore remain positive for every sufficiently long prefix. Choose a finite $N>K$ beyond this point. If $K=1$, there are no mixed-phase comparisons and $N=K+1$ suffices.
 
-At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Finally, the constructed optimal policy uses only the cycle number and the observed pair $(c_i,B_{i-1})$. Independent draws make this state sufficient for the Bellman recursion. The policy neither observes nor estimates historical coefficient realizations.\hfill$\square$
+At the phase switch, the external proportion drops from $1$ to at most $\rho/b<1$. Combining this drop with the mixed-phase comparisons proves the expected monotonicity for every $n\ge N$. Independent draws make the current budget and balance sufficient for the Bellman recursion. Computing $K$ and executing the policy require only $b,w,v,$ and $\rho$, together with the horizon, cycle number, and observed state. Neither the full distribution nor historical coefficient realizations are required.\hfill$\square$
 
 \medskip
 \textbf{Even when intrinsic value is the sole objective, building external support first can be the optimal way to sustain an increasing intrinsic allocation over time in expectation.}
