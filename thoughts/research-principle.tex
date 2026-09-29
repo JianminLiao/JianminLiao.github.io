@@ -23,6 +23,13 @@ The model below establishes this result for a sufficiently long research horizon
 
 Intrinsic value is the scientific contribution the researcher ultimately values. External value is support convertible into research funding, measured in the same units as expenditure.
 
+\section*{Goal}
+
+Maximize expected total intrinsic value over $n$ research cycles:
+\[
+ \max\ \mathbb E\!\left[\sum_{i=1}^{n}I_i\right].
+\]
+
 \section*{Assumptions}
 
 Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$.
@@ -47,10 +54,7 @@ with the requirement
 \]
 Research income must cover spending while growing the reserve.
 
-\textbf{3. Intrinsic value as the sole objective.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known about the common distribution. The objective is
-\[
- \max\ \mathbb E\!\left[\sum_{i=1}^{n}I_i\right].
-\]
+\textbf{3. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known about the common distribution.
 
 \section*{The result}
 
