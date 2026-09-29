@@ -32,25 +32,25 @@ Maximize expected total intrinsic value over $n$ research cycles:
 
 \section*{Assumptions}
 
-Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$.
+Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$. Write $\mathbb E_i$ for expectation conditional on the information available when $p_i$ is chosen, including that choice.
 
-\textbf{1. Linear returns.} Intrinsic value, external value, and the next budget satisfy
+\textbf{1. Linear expected returns.} For every decision history and allocation,
 \[
- I_i=a_i p_i c_i,\qquad E_i=b_i(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
+ \mathbb E_i[I_i]=a p_i c_i,\qquad \mathbb E_i[E_i]=w(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
 \]
-The vectors $(a_i,b_i,d_i)$ are iid across cycles. All coefficients are bounded above, and $a_i$ has a positive lower bound. Let $b$ be the lowest possible value of $b_i$. Assume $d_i\ge1$: external support generates at least an equal research budget in the next cycle.
+The constants $a>0$ and $w$ are common to all cycles. The multipliers $d_i\ge1$ are iid and bounded; each draw is independent of the decision information and current external return.
 
-\textbf{2. A growing reserve.} The funding balance obeys
+\textbf{2. A growing reserve.} For every decision history and allocation, the lowest possible external return is $b(1-p_i)c_i$, with the same $b$ across cycles. The funding balance obeys
 \[
  B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
 \]
-For every possible coefficient outcome, require
+For every possible outcome, require
 \[
  B_i\ge\rho B_{i-1},\qquad 1<\rho<b.
 \]
 Research income must cover spending while growing the reserve.
 
-\textbf{3. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current coefficients are drawn. Only $b$, $\mathbb E[b_i]$, and $\mathbb E[b_i d_i]$ are known about the common distribution.
+\textbf{3. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current returns and funding multiplier are drawn. Only $b$, $w$, and $\mathbb E[d_i]$ are known about their distributions.
 
 \section*{The result}
 
@@ -90,7 +90,7 @@ ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\
 \caption{One optimal trajectory with iid random coefficients. All resources go to external value in the first eight cycles. The line shows the intrinsic allocation share. Each bar shows cumulative intrinsic value, with the current increment highlighted.}
 \end{figure}
 
-Take $n=20$, $\rho=1.045$, and independent uniform draws
+Use $I_i=a_i p_i c_i$ and $E_i=b_i(1-p_i)c_i$, with $n=20$, $\rho=1.045$, and independent uniform draws
 \[
  a_i\sim U[1.5,2.5],\qquad b_i\sim U[1.05,1.15],\qquad d_i\sim U[1,1.2].
 \]
@@ -107,11 +107,11 @@ Write $u=(1-p)c$ for external expenditure. The reserve constraint gives the feas
  \frac{c+(\rho-1)B}{b}\le u\le c.
 \]
 
-Independence lets us divide the objective by the positive constant $\mathbb E[a_i]$, giving stage reward $c-u$. Set
+Divide the objective by $a$, giving expected stage reward $c-u$. Independence of the funding multiplier gives
 \[
- w=\mathbb E[b_i],\qquad v=\mathbb E[b_i d_i],\qquad v\ge w\ge b>\rho>1.
+ v=w\mathbb E[d_i]\ge w\ge b>\rho>1,\qquad \mathbb E_i[c_{i+1}]=v(1-p_i)c_i.
 \]
-The value function with $m$ cycles remaining is linear: $V_m(c,B)=A_m c+D_m B$, with $A_0=D_0=0$. To see this, define $S_m=vA_m+wD_m$. The Bellman objective is
+At every decision history with state $(c,B)$ and $m$ cycles remaining, the value is $V_m(c,B)=A_m c+D_m B$, with $A_0=D_0=0$. To see this, define $S_m=vA_m+wD_m$. The Bellman objective is
 \[
  (1-D_{m-1})c+D_{m-1}B+(S_{m-1}-1)u.
 \]
