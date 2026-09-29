@@ -30,21 +30,21 @@ Maximize expected total intrinsic value over $n$ research cycles:
  \max\ \mathbb E\!\left[\sum_{i=1}^{n}I_i\right].
 \]
 
-\section*{Linear expected returns}
+\section*{Nonlinear returns}
 
-\textbf{With linear expected returns, a long horizon makes full initial external focus optimal.}
+\textbf{The optimal initial intrinsic share approaches zero as the horizon grows, even with nonlinear returns.}
 
 \subsection*{Assumptions for Theorem 1}
 
-Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$. Write $\mathbb E_i$ for expectation conditional on the information available when $p_i$ is chosen, including that choice.
+Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$. The researcher observes the current budget and balance before choosing $p_i$.
 
-\textbf{1. Linear expected returns.} For every decision history and allocation,
+\textbf{1. Random return functions.} Let $F_i(x)$ and $G_i(x)$ be the intrinsic and external returns from expenditure $x$, so
 \[
- \mathbb E_i[I_i]=a p_i c_i,\qquad \mathbb E_i[E_i]=w(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
+ I_i=F_i(p_i c_i),\qquad E_i=G_i((1-p_i)c_i),\qquad c_{i+1}=d_iE_i.
 \]
-The constants $a>0$ and $w$ are common to all cycles. The multipliers $d_i\ge1$ are iid and bounded; each draw is independent of the decision information and current external return.
+The nonnegative return functions vanish at zero. The pairs $(F_i,G_i)$ are iid across cycles. The multipliers $d_i\ge1$ are iid, bounded, and independent of the return functions. Allocations are chosen before the current draws. At every feasible state, finite-horizon optimal policies exist and have finite expected value.
 
-\textbf{2. A growing reserve.} For every decision history and allocation, the lowest possible external return is $b(1-p_i)c_i$, with the same $b$ across cycles. The funding balance obeys
+\textbf{2. A growing reserve.} For every decision history, the lowest possible external return from expenditure $x$ is $bx$, with the same $b$ across cycles. The funding balance obeys
 \[
  B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
 \]
@@ -54,7 +54,98 @@ For every possible outcome, require
 \]
 Research income must cover spending while growing the reserve.
 
-\textbf{3. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current returns and funding multiplier are drawn. Only $b$, $w$, and $\mathbb E[d_i]$ are known about their distributions.
+\textbf{3. Positive return increments.} Write $f(x)=\mathbb E[F_i(x)]$. For some $m>0$ and every $x,h\ge0$, require
+\[
+ f(x+h)-f(x)\ge m h,\qquad G_i(x+h)-G_i(x)\ge b h.
+\]
+The second inequality holds for every realization. These conditions allow nonlinear returns with a positive minimum gain from additional investment.
+
+\subsection*{Approximate initial external focus}
+
+\begin{theorem}
+For every horizon $n\ge2$, the first intrinsic share $p_1^{*(n)}$ under any optimal policy satisfies
+\[
+ 0\le p_1^{*(n)}\le\frac{f(1)}{m(b-\rho)b^{\,n-2}}.
+\]
+Consequently, $p_1^{*(n)}\to0$ as $n\to\infty$: the optimal initial allocation becomes arbitrarily close to full external focus.
+\end{theorem}
+
+\subsection*{A nonlinear example}
+
+Use $n=100$, $\rho=1.01$, and
+\[
+ I_i=p_i c_i+A_i\sqrt{p_i c_i},\qquad E_i=1.05(1-p_i)c_i,\qquad d_i=1,
+\]
+with iid $A_i\sim U[0.8,1.2]$. Then $f(x)=x+\sqrt{x}$, so these assumptions hold with $m=1$ and $b=1.05$. We numerically maximize expected total intrinsic value and show one realization with random seed 20260928.
+
+\begin{figure}[H]
+\centering
+\label{fig:nonlinear-example}
+\begin{tikzpicture}
+\begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
+xmin=1,xmax=100,ymin=0,ymax=90,axis y line*=right,axis x line*=bottom,
+xtick={1,20,40,60,80,100},ytick={0,20,40,60,80},
+xlabel={Research cycle},ylabel={Cumulative intrinsic value},
+tick label style={font=\small},label style={font=\small},
+legend style={at={(0.02,0.98)},anchor=north west,font=\small,draw=none,fill=none}]
+\addlegendimage{blue!65!black,very thick}
+\addlegendentry{Intrinsic allocation (left)}
+\addplot[teal!75!black,very thick,dashed] coordinates {(1,0.00875274816) (2,0.016238974) (3,0.0251161785) (4,0.0348661056) (5,0.0465973993) (6,0.056884246) (7,0.0664739) (8,0.0791525958) (9,0.0905757152) (10,0.101512319) (11,0.116578456) (12,0.133330608) (13,0.148896782) (14,0.168784125) (15,0.186971) (16,0.202961987) (17,0.219636295) (18,0.242416673) (19,0.267414147) (20,0.294584299) (21,0.315024521) (22,0.337492125) (23,0.36694849) (24,0.397103911) (25,0.429633329) (26,0.45550983) (27,0.487225268) (28,0.525436058) (29,0.558269535) (30,0.601088058) (31,0.648982504) (32,0.692942051) (33,0.742520555) (34,0.78974889) (35,0.850112262) (36,0.898983388) (37,0.959566964) (38,1.01808844) (39,1.07341892) (40,1.14866799) (41,1.22229034) (42,1.31138754) (43,1.37969056) (44,1.45572036) (45,1.56333273) (46,1.6574745) (47,1.77630265) (48,1.88802143) (49,2.00478165) (50,2.11201956) (51,2.26689274) (52,2.41047041) (53,2.5787131) (54,2.73251678) (55,2.91780193) (56,3.11209239) (57,3.28867459) (58,3.54077883) (59,3.78948121) (60,4.01664694) (61,4.28122778) (62,4.55308728) (63,4.89301891) (64,5.24332198) (65,5.69504358) (66,6.16345216) (67,6.69004104) (68,7.194328) (69,7.75485265) (70,8.3701624) (71,9.24728298) (72,10.2636213) (73,11.462382) (74,12.7477918) (75,14.3142566) (76,16.2744686) (77,18.4464516) (78,20.9816623) (79,23.483184) (80,25.9505677) (81,28.2886975) (82,30.6637645) (83,33.4381543) (84,36.226747) (85,38.7398894) (86,41.2356842) (87,43.8963815) (88,46.4330514) (89,49.0260989) (90,51.6729495) (91,54.3461096) (92,57.1548899) (93,59.9671813) (94,62.6312514) (95,65.2000805) (96,68.0033455) (97,71.0446361) (98,73.7365841) (99,76.4711109) (100,79.1572829)};
+\addlegendentry{Cumulative intrinsic value (right)}
+\end{axis}
+\begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
+xmin=1,xmax=100,ymin=0,ymax=4.5,axis y line*=left,axis x line=none,xtick=\empty,
+ytick={0,1,2,3,4},yticklabel={\pgfmathprintnumber{\tick}\%},
+ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\small}]
+\addplot[blue!65!black,very thick] coordinates {(1,0.00735292204) (2,0.00773435507) (3,0.00813637468) (4,0.00856007784) (5,0.00900679193) (6,0.00947778572) (7,0.00997455495) (8,0.0104985685) (9,0.011051503) (10,0.0116350635) (11,0.012251127) (12,0.0129016824) (13,0.0135888229) (14,0.0143148837) (15,0.0150822684) (16,0.01589358) (17,0.016751713) (18,0.0176596417) (19,0.0186206587) (20,0.0196383285) (21,0.0207163804) (22,0.021859) (23,0.0230705182) (24,0.0243558109) (25,0.0257201294) (26,0.0271691058) (27,0.0287089171) (28,0.0303462121) (29,0.0320883464) (30,0.0339433707) (31,0.0359200408) (32,0.038027952) (33,0.0402775416) (34,0.0426805083) (35,0.0452496043) (36,0.0479989244) (37,0.0509441286) (38,0.0541024973) (39,0.0574933411) (40,0.0611382371) (41,0.0650609429) (42,0.0692885307) (43,0.0738511474) (44,0.0787827402) (45,0.084121837) (46,0.089911857) (47,0.0962022909) (48,0.103049761) (49,0.110518835) (50,0.118683686) (51,0.12763066) (52,0.137458203) (53,0.148282883) (54,0.160240078) (55,0.173488838) (56,0.188217795) (57,0.204650712) (58,0.223056902) (59,0.243758477) (60,0.267148299) (61,0.293706233) (62,0.324025164) (63,0.358842937) (64,0.399088417) (65,0.445940926) (66,0.500924999) (67,0.566023291) (68,0.643868667) (69,0.738008189) (70,0.853314428) (71,0.996629515) (72,1.17780024) (73,1.41141632) (74,1.71983537) (75,2.13873844) (76,2.72792288) (77,3.593879) (78,3.83747305) (79,3.83720437) (80,3.8369382) (81,3.8366745) (82,3.83641328) (83,3.83615449) (84,3.83589812) (85,3.83564415) (86,3.83539256) (87,3.83514332) (88,3.83489642) (89,3.83465183) (90,3.83440954) (91,3.83416953) (92,3.83393176) (93,3.83369623) (94,3.83346292) (95,3.8332318) (96,3.83300285) (97,3.83277606) (98,3.83255141) (99,3.83232887) (100,3.83210843)};
+\end{axis}
+\end{tikzpicture}
+\caption{One 100-cycle realization of the nonlinear model. The solid line shows the intrinsic allocation share; the dashed line shows cumulative realized intrinsic value. The first share is 0.0074 percent, rising to about 3.8 percent in later cycles.}
+\end{figure}
+
+\subsection*{Proof of Theorem 1}
+
+Every feasible state satisfies $0\le B\le c$: this holds initially and is preserved because
+\[
+ 0\le B'=B+E-c\le E\le d_iE=c'.
+\]
+Intrinsic expenditure $t$ is feasible precisely when
+\[
+ 0\le t\le\frac{(b-1)c-(\rho-1)B}{b}.
+\]
+Let $V_k(c,B)$ denote optimal expected intrinsic value with $k$ cycles remaining. We first show that increasing the state by $(\delta,\eta)$, with $0\le\eta\le\delta$, gives
+\[
+ V_k(c+\delta,B+\eta)-V_k(c,B)\ge L_k\delta,\qquad L_k=m(b-\rho)b^{\,k-2}.
+\]
+For $k=1$, optimal intrinsic expenditure is the upper endpoint above. It increases by at least $(1-\rho/b)\delta$, so the lower bound on $f$ gives $L_1\delta$.
+
+For the induction step, use the smaller state's optimal intrinsic expenditure in the larger state. External expenditure increases by $\delta$; the reserve constraint remains satisfied because $b\delta\ge\delta+(\rho-1)\eta$. Couple the two decisions using the same return functions and funding multiplier. The external return increases by some $\Delta E\ge b\delta$. The next-state differences are
+\[
+ \delta'=d_i\Delta E,\qquad \eta'=\eta+\Delta E-\delta,
+\]
+so $0\le\eta'\le\delta'$ and $\delta'\ge b\delta$. Current intrinsic returns are identical. The induction hypothesis therefore gives a continuation gain of at least $bL_{k-1}\delta=L_k\delta$.
+
+Finally, at the initial state $(1,0)$, compare an optimal intrinsic expenditure $t=p_1^{*(n)}$ with full external allocation. Full external allocation increases the next budget and balance by $(d_i\Delta E,\Delta E)$, where $\Delta E\ge bt$. The value comparison just proved gives a continuation gain of at least $bL_{n-1}t=L_nt$. Optimality of $t$ requires its current expected intrinsic return to cover this gain:
+\[
+ L_nt\le f(t)\le f(1).
+\]
+Dividing by $L_n$ proves the bound. Since $b>1$, its right-hand side tends to zero.\hfill$\square$
+
+\section*{Linear expected returns}
+
+\textbf{This initial share becomes exactly zero for sufficiently long horizons with linear expected returns.}
+
+\subsection*{Assumptions for Theorem 2}
+
+Keep the same initial state and growing-reserve condition. Write $\mathbb E_i$ for expectation conditional on the information available when $p_i$ is chosen, including that choice.
+
+\textbf{1. Linear expected returns.} For every decision history and allocation,
+\[
+ \mathbb E_i[I_i]=a p_i c_i,\qquad \mathbb E_i[E_i]=w(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
+\]
+The constants $a>0$ and $w$ are common to all cycles. The multipliers $d_i\ge1$ are iid and bounded; each draw is independent of the decision information and current external return.
+
+\textbf{2. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current returns and funding multiplier are drawn. Only $b$, $w$, and $\mathbb E[d_i]$ are known about their distributions.
 
 \subsection*{Full initial external focus}
 
@@ -100,12 +191,9 @@ Use $I_i=a_i p_i c_i$ and $E_i=b_i(1-p_i)c_i$, with $n=20$, $\rho=1.045$, and in
 \]
 Here $K=12$, so the first eight cycles are devoted entirely to external value. The figure shows one realization with random seed 20260928.
 
-\subsection*{Proof of Theorem 1}
+\subsection*{Proof of Theorem 2}
 
-Every feasible state satisfies $0\le B\le c$: this holds initially and is preserved because
-\[
- 0\le B'=B+E-c\le E\le d_iE=c'.
-\]
+Every feasible state satisfies $0\le B\le c$, as shown above.
 Write $u=(1-p)c$ for external expenditure. The reserve constraint gives the feasible interval
 \[
  \frac{c+(\rho-1)B}{b}\le u\le c.
@@ -141,93 +229,6 @@ Once $S_{m-1}>1$, the unique maximizing choice is $u=c$. Then $D_m=D_{m-1}\le0$ 
  S_m=vS_{m-1}+(w-v)D_{m-1}>S_{m-1}>1.
 \]
 Thus every decision with more than $K$ cycles remaining uniquely allocates everything to external value. These are precisely the first $n-K$ cycles.\hfill$\square$
-
-\section*{Nonlinear returns}
-
-\textbf{With nonlinear returns that retain a positive minimum gain from added investment, the optimal initial external share still approaches one.}
-
-\subsection*{Assumptions for Theorem 2}
-
-Keep the same objective, initial budget and balance, exact budget rule, and growing-reserve requirement. Use the following assumptions for nonlinear returns.
-
-\textbf{1. Random return functions.} Let $F_i(x)$ and $G_i(x)$ be the intrinsic and external returns from expenditure $x$, so
-\[
- I_i=F_i(p_i c_i),\qquad E_i=G_i((1-p_i)c_i),\qquad c_{i+1}=d_iE_i.
-\]
-The nonnegative return functions vanish at zero. The pairs $(F_i,G_i)$ are iid across cycles. The multipliers $d_i\ge1$ are iid, bounded, and independent of the return functions. Allocations are chosen before the current draws. At every feasible state, finite-horizon optimal policies exist and have finite expected value.
-
-\textbf{2. Positive return increments.} Write $f(x)=\mathbb E[F_i(x)]$. For some $m>0$ and every $x,h\ge0$, require
-\[
- f(x+h)-f(x)\ge m h,\qquad G_i(x+h)-G_i(x)\ge b h.
-\]
-The second inequality holds for every realization. At each expenditure $x$, the lowest possible external return is $bx$, with $1<\rho<b$ as before. These conditions allow nonlinear returns with a positive minimum gain from additional investment.
-
-\subsection*{Approximate initial external focus}
-
-\begin{theorem}
-For every horizon $n\ge2$, the first intrinsic share $p_1^{*(n)}$ under any optimal policy satisfies
-\[
- 0\le p_1^{*(n)}\le\frac{f(1)}{m(b-\rho)b^{\,n-2}}.
-\]
-Consequently, $p_1^{*(n)}\to0$ as $n\to\infty$: the optimal initial allocation becomes arbitrarily close to full external focus.
-\end{theorem}
-
-\subsection*{A nonlinear example}
-
-Use $n=100$, $\rho=1.01$, and
-\[
- I_i=p_i c_i+A_i\sqrt{p_i c_i},\qquad E_i=1.05(1-p_i)c_i,\qquad d_i=1,
-\]
-with iid $A_i\sim U[0.8,1.2]$. Then $f(x)=x+\sqrt{x}$, so the second set of assumptions holds with $m=1$ and $b=1.05$. We numerically maximize expected total intrinsic value and show one realization with random seed 20260928.
-
-\begin{figure}[H]
-\centering
-\label{fig:nonlinear-example}
-\begin{tikzpicture}
-\begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=1,xmax=100,ymin=0,ymax=90,axis y line*=right,axis x line*=bottom,
-xtick={1,20,40,60,80,100},ytick={0,20,40,60,80},
-xlabel={Research cycle},ylabel={Cumulative intrinsic value},
-tick label style={font=\small},label style={font=\small},
-legend style={at={(0.02,0.98)},anchor=north west,font=\small,draw=none,fill=none}]
-\addlegendimage{blue!65!black,very thick}
-\addlegendentry{Intrinsic allocation (left)}
-\addplot[teal!75!black,very thick,dashed] coordinates {(1,0.00875274816) (2,0.016238974) (3,0.0251161785) (4,0.0348661056) (5,0.0465973993) (6,0.056884246) (7,0.0664739) (8,0.0791525958) (9,0.0905757152) (10,0.101512319) (11,0.116578456) (12,0.133330608) (13,0.148896782) (14,0.168784125) (15,0.186971) (16,0.202961987) (17,0.219636295) (18,0.242416673) (19,0.267414147) (20,0.294584299) (21,0.315024521) (22,0.337492125) (23,0.36694849) (24,0.397103911) (25,0.429633329) (26,0.45550983) (27,0.487225268) (28,0.525436058) (29,0.558269535) (30,0.601088058) (31,0.648982504) (32,0.692942051) (33,0.742520555) (34,0.78974889) (35,0.850112262) (36,0.898983388) (37,0.959566964) (38,1.01808844) (39,1.07341892) (40,1.14866799) (41,1.22229034) (42,1.31138754) (43,1.37969056) (44,1.45572036) (45,1.56333273) (46,1.6574745) (47,1.77630265) (48,1.88802143) (49,2.00478165) (50,2.11201956) (51,2.26689274) (52,2.41047041) (53,2.5787131) (54,2.73251678) (55,2.91780193) (56,3.11209239) (57,3.28867459) (58,3.54077883) (59,3.78948121) (60,4.01664694) (61,4.28122778) (62,4.55308728) (63,4.89301891) (64,5.24332198) (65,5.69504358) (66,6.16345216) (67,6.69004104) (68,7.194328) (69,7.75485265) (70,8.3701624) (71,9.24728298) (72,10.2636213) (73,11.462382) (74,12.7477918) (75,14.3142566) (76,16.2744686) (77,18.4464516) (78,20.9816623) (79,23.483184) (80,25.9505677) (81,28.2886975) (82,30.6637645) (83,33.4381543) (84,36.226747) (85,38.7398894) (86,41.2356842) (87,43.8963815) (88,46.4330514) (89,49.0260989) (90,51.6729495) (91,54.3461096) (92,57.1548899) (93,59.9671813) (94,62.6312514) (95,65.2000805) (96,68.0033455) (97,71.0446361) (98,73.7365841) (99,76.4711109) (100,79.1572829)};
-\addlegendentry{Cumulative intrinsic value (right)}
-\end{axis}
-\begin{axis}[scale only axis,width=0.76\textwidth,height=6cm,
-xmin=1,xmax=100,ymin=0,ymax=4.5,axis y line*=left,axis x line=none,xtick=\empty,
-ytick={0,1,2,3,4},yticklabel={\pgfmathprintnumber{\tick}\%},
-ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\small}]
-\addplot[blue!65!black,very thick] coordinates {(1,0.00735292204) (2,0.00773435507) (3,0.00813637468) (4,0.00856007784) (5,0.00900679193) (6,0.00947778572) (7,0.00997455495) (8,0.0104985685) (9,0.011051503) (10,0.0116350635) (11,0.012251127) (12,0.0129016824) (13,0.0135888229) (14,0.0143148837) (15,0.0150822684) (16,0.01589358) (17,0.016751713) (18,0.0176596417) (19,0.0186206587) (20,0.0196383285) (21,0.0207163804) (22,0.021859) (23,0.0230705182) (24,0.0243558109) (25,0.0257201294) (26,0.0271691058) (27,0.0287089171) (28,0.0303462121) (29,0.0320883464) (30,0.0339433707) (31,0.0359200408) (32,0.038027952) (33,0.0402775416) (34,0.0426805083) (35,0.0452496043) (36,0.0479989244) (37,0.0509441286) (38,0.0541024973) (39,0.0574933411) (40,0.0611382371) (41,0.0650609429) (42,0.0692885307) (43,0.0738511474) (44,0.0787827402) (45,0.084121837) (46,0.089911857) (47,0.0962022909) (48,0.103049761) (49,0.110518835) (50,0.118683686) (51,0.12763066) (52,0.137458203) (53,0.148282883) (54,0.160240078) (55,0.173488838) (56,0.188217795) (57,0.204650712) (58,0.223056902) (59,0.243758477) (60,0.267148299) (61,0.293706233) (62,0.324025164) (63,0.358842937) (64,0.399088417) (65,0.445940926) (66,0.500924999) (67,0.566023291) (68,0.643868667) (69,0.738008189) (70,0.853314428) (71,0.996629515) (72,1.17780024) (73,1.41141632) (74,1.71983537) (75,2.13873844) (76,2.72792288) (77,3.593879) (78,3.83747305) (79,3.83720437) (80,3.8369382) (81,3.8366745) (82,3.83641328) (83,3.83615449) (84,3.83589812) (85,3.83564415) (86,3.83539256) (87,3.83514332) (88,3.83489642) (89,3.83465183) (90,3.83440954) (91,3.83416953) (92,3.83393176) (93,3.83369623) (94,3.83346292) (95,3.8332318) (96,3.83300285) (97,3.83277606) (98,3.83255141) (99,3.83232887) (100,3.83210843)};
-\end{axis}
-\end{tikzpicture}
-\caption{One 100-cycle realization of the nonlinear model. The solid line shows the intrinsic allocation share; the dashed line shows cumulative realized intrinsic value. The first share is 0.0074 percent, rising to about 3.8 percent in later cycles.}
-\end{figure}
-
-\subsection*{Proof of Theorem 2}
-
-As before, $0\le B\le c$. Intrinsic expenditure $t$ is feasible precisely when
-\[
- 0\le t\le\frac{(b-1)c-(\rho-1)B}{b}.
-\]
-Let $V_k(c,B)$ denote optimal expected intrinsic value with $k$ cycles remaining. We first show that increasing the state by $(\delta,\eta)$, with $0\le\eta\le\delta$, gives
-\[
- V_k(c+\delta,B+\eta)-V_k(c,B)\ge L_k\delta,\qquad L_k=m(b-\rho)b^{\,k-2}.
-\]
-For $k=1$, optimal intrinsic expenditure is the upper endpoint above. It increases by at least $(1-\rho/b)\delta$, so the lower bound on $f$ gives $L_1\delta$.
-
-For the induction step, use the smaller state's optimal intrinsic expenditure in the larger state. External expenditure increases by $\delta$; the reserve constraint remains satisfied because $b\delta\ge\delta+(\rho-1)\eta$. Couple the two decisions using the same return functions and funding multiplier. The external return increases by some $\Delta E\ge b\delta$. The next-state differences are
-\[
- \delta'=d_i\Delta E,\qquad \eta'=\eta+\Delta E-\delta,
-\]
-so $0\le\eta'\le\delta'$ and $\delta'\ge b\delta$. Current intrinsic returns are identical. The induction hypothesis therefore gives a continuation gain of at least $bL_{k-1}\delta=L_k\delta$.
-
-Finally, at the initial state $(1,0)$, compare an optimal intrinsic expenditure $t=p_1^{*(n)}$ with full external allocation. Full external allocation increases the next budget and balance by $(d_i\Delta E,\Delta E)$, where $\Delta E\ge bt$. The value comparison just proved gives a continuation gain of at least $bL_{n-1}t=L_nt$. Optimality of $t$ requires its current expected intrinsic return to cover this gain:
-\[
- L_nt\le f(t)\le f(1).
-\]
-Dividing by $L_n$ proves the bound. Since $b>1$, its right-hand side tends to zero.\hfill$\square$
 
 \medskip
 \textbf{Even when only intrinsic value matters, the optimal starting allocation is entirely or almost entirely external.}
