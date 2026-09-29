@@ -30,9 +30,11 @@ Maximize expected total intrinsic value over $n$ research cycles:
  \max\ \mathbb E\!\left[\sum_{i=1}^{n}I_i\right].
 \]
 
-With linear expected returns, a long horizon makes full initial external focus optimal.
+\section*{Linear expected returns}
 
-\section*{Assumptions for Theorem 1}
+\textbf{With linear expected returns, a long horizon makes full initial external focus optimal.}
+
+\subsection*{Assumptions for Theorem 1}
 
 Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$, expenditure is $c_i$ and the fraction allocated to intrinsic work is $p_i\in[0,1]$. Write $\mathbb E_i$ for expectation conditional on the information available when $p_i$ is chosen, including that choice.
 
@@ -54,7 +56,7 @@ Research income must cover spending while growing the reserve.
 
 \textbf{3. Decision information.} The researcher observes the current budget and balance and chooses $p_i$ before the current returns and funding multiplier are drawn. Only $b$, $w$, and $\mathbb E[d_i]$ are known about their distributions.
 
-\section*{Full initial external focus}
+\subsection*{Full initial external focus}
 
 \begin{theorem}
 There is a finite integer $K\ge1$, independent of the horizon $n$, such that whenever $n>K$, the unique optimal decision in each of the first $n-K$ cycles is to allocate all resources to external value:
@@ -63,7 +65,7 @@ There is a finite integer $K\ge1$, independent of the horizon $n$, such that whe
 \]
 \end{theorem}
 
-\section*{A numerical example}
+\subsection*{A numerical example}
 
 \begin{figure}[H]
 \centering
@@ -98,7 +100,7 @@ Use $I_i=a_i p_i c_i$ and $E_i=b_i(1-p_i)c_i$, with $n=20$, $\rho=1.045$, and in
 \]
 Here $K=12$, so the first eight cycles are devoted entirely to external value. The figure shows one realization with random seed 20260928.
 
-\section*{Proof of Theorem 1}
+\subsection*{Proof of Theorem 1}
 
 Every feasible state satisfies $0\le B\le c$: this holds initially and is preserved because
 \[
@@ -140,9 +142,11 @@ Once $S_{m-1}>1$, the unique maximizing choice is $u=c$. Then $D_m=D_{m-1}\le0$ 
 \]
 Thus every decision with more than $K$ cycles remaining uniquely allocates everything to external value. These are precisely the first $n-K$ cycles.\hfill$\square$
 
-With nonlinear returns that retain a positive minimum gain from added investment, the optimal initial external share still approaches one.
+\section*{Nonlinear returns}
 
-\section*{Assumptions for Theorem 2}
+\textbf{With nonlinear returns that retain a positive minimum gain from added investment, the optimal initial external share still approaches one.}
+
+\subsection*{Assumptions for Theorem 2}
 
 Keep the same objective, initial budget and balance, exact budget rule, and growing-reserve requirement. Use the following assumptions for nonlinear returns.
 
@@ -158,7 +162,7 @@ The nonnegative return functions vanish at zero. The pairs $(F_i,G_i)$ are iid a
 \]
 The second inequality holds for every realization. At each expenditure $x$, the lowest possible external return is $bx$, with $1<\rho<b$ as before. These conditions allow nonlinear returns with a positive minimum gain from additional investment.
 
-\section*{Approximate initial external focus}
+\subsection*{Approximate initial external focus}
 
 \begin{theorem}
 For every horizon $n\ge2$, the first intrinsic share $p_1^{*(n)}$ under any optimal policy satisfies
@@ -168,7 +172,7 @@ For every horizon $n\ge2$, the first intrinsic share $p_1^{*(n)}$ under any opti
 Consequently, $p_1^{*(n)}\to0$ as $n\to\infty$: the optimal initial allocation becomes arbitrarily close to full external focus.
 \end{theorem}
 
-\section*{A nonlinear example}
+\subsection*{A nonlinear example}
 
 Use $n=100$, $\rho=1.01$, and
 \[
@@ -201,7 +205,7 @@ ylabel={Intrinsic allocation},tick label style={font=\small},label style={font=\
 \caption{One 100-cycle realization of the nonlinear model. The solid line shows the intrinsic allocation share; the dashed line shows cumulative realized intrinsic value. The first share is 0.0074 percent, rising to about 3.8 percent in later cycles.}
 \end{figure}
 
-\section*{Proof of Theorem 2}
+\subsection*{Proof of Theorem 2}
 
 As before, $0\le B\le c$. Intrinsic expenditure $t$ is feasible precisely when
 \[
