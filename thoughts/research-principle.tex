@@ -38,19 +38,15 @@ Consider $n$ research cycles, starting with a seed budget $c_1=1$. In cycle $i$,
 \[
  I_i=a_i p_i c_i,\qquad E_i=b_i(1-p_i)c_i,\qquad c_{i+1}=d_iE_i.
 \]
-The vectors $(a_i,b_i,d_i)$ are iid across cycles. All coefficients are bounded above, and $a_i$ has a positive lower bound. Write
-\[
- b=\operatorname{ess\,inf}b_i,\qquad d_i\ge1\ \text{almost surely}.
-\]
-External support is fully carried into the next research budget.
+The vectors $(a_i,b_i,d_i)$ are iid across cycles. All coefficients are bounded above, and $a_i$ has a positive lower bound. Let $b$ be the lowest possible value of $b_i$. Assume $d_i\ge1$: external support generates at least an equal research budget in the next cycle.
 
 \textbf{2. A growing reserve.} The funding balance obeys
 \[
- B_0=0,\qquad B_i=B_{i-1}+E_i-c_i,
+ B_0=0,\qquad B_i=B_{i-1}+E_i-c_i.
 \]
-with the requirement
+For every possible coefficient outcome, require
 \[
- B_i\ge\rho B_{i-1}\ \text{almost surely},\qquad 1<\rho<b.
+ B_i\ge\rho B_{i-1},\qquad 1<\rho<b.
 \]
 Research income must cover spending while growing the reserve.
 
@@ -59,9 +55,9 @@ Research income must cover spending while growing the reserve.
 \section*{The result}
 
 \begin{theorem}
-There is a finite integer $K\ge1$, independent of the horizon $n$, such that whenever $n>K$, every optimal strategy allocates all resources to external value in the first $n-K$ cycles:
+There is a finite integer $K\ge1$, independent of the horizon $n$, such that whenever $n>K$, the unique optimal decision in each of the first $n-K$ cycles is to allocate all resources to external value:
 \[
- p_i=0\qquad(1\le i\le n-K),\quad\text{almost surely}.
+ p_i=0\qquad(1\le i\le n-K).
 \]
 \end{theorem}
 
