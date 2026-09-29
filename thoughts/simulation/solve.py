@@ -4,9 +4,9 @@ import json
 import sys
 import numpy as np
 
-n, rho, seed = 12, 1.045, 20260928
-low = np.array([0.5, 1.05, 1.0])
-high = np.array([3.5, 1.30, 1.6])
+n, rho, seed = 20, 1.045, 20260928
+low = np.array([1.5, 1.05, 1.0])
+high = np.array([2.5, 1.15, 1.2])
 b = low[1]
 mean_a, w, mean_d = (low + high) / 2
 v = w * mean_d
