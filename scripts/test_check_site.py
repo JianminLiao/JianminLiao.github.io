@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from check_site import CSP, audit
+from check_site import CSP, UMAMI_CSP, UMAMI_SCRIPT, audit
 
 
 class PublicationChecks(unittest.TestCase):
@@ -83,6 +83,40 @@ class PublicationChecks(unittest.TestCase):
     def test_manifest_cannot_publish_repository_config(self):
         self.add('.github/settings.json', '{}', public=True)
         self.assertTrue(any('unexpected public location' in e for e in self.failures()))
+
+    def umami_html(self):
+        tracker = f'<script defer src="{UMAMI_SCRIPT}" data-website-id="00000000-0000-4000-8000-000000000001"></script>'
+        return self.html.replace(CSP, UMAMI_CSP).replace('</head>', tracker + '</head>')
+
+    def test_umami_only_allowed_on_homepage(self):
+        html = self.umami_html()
+        (self.root / 'index.html').write_text(html)
+        self.assertEqual(self.failures(), [])
+        self.add('thoughts/new.html', html, public=True)
+        self.assertTrue(any('thoughts/new.html' in e for e in self.failures()))
+
+    def test_umami_rejects_unreviewed_script_changes(self):
+        html = self.umami_html()
+        variants = [
+            html.replace('00000000-0000-4000-8000-000000000001', '__UMAMI_WEBSITE_ID__'),
+            html.replace(' defer ', ' '),
+            html.replace(UMAMI_SCRIPT, UMAMI_SCRIPT + '?extra=1'),
+            html.replace('<script defer', '<script data-host-url="https://example.com" defer'),
+            html.replace('</script>', 'alert(1)</script>'),
+            html.replace('</script>', ''),
+        ]
+        for changed in variants:
+            with self.subTest(changed=changed):
+                (self.root / 'index.html').write_text(changed)
+                self.assertTrue(self.failures())
+
+    def test_umami_policy_requires_one_tracker(self):
+        html = self.umami_html()
+        tracker = html[html.index('<script'):html.index('</script>') + len('</script>')]
+        for changed in (html.replace(tracker, ''), html.replace(tracker, tracker * 2), html.replace(UMAMI_CSP, UMAMI_CSP + "; script-src-attr 'unsafe-inline'")):
+            with self.subTest(changed=changed):
+                (self.root / 'index.html').write_text(changed)
+                self.assertTrue(self.failures())
 
 
 if __name__ == '__main__':

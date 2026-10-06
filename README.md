@@ -1,6 +1,6 @@
 # Jianmin Liao — Personal website
 
-英文个人学术主页，使用原生 HTML/CSS 和 GitHub Pages。无构建工具、JavaScript、第三方字体、追踪服务或运行时依赖。
+英文个人学术主页，使用原生 HTML/CSS 和 GitHub Pages。主页仅接入 Umami Cloud 统计脚本；文章页保持无脚本。无前端框架、第三方字体或自建后端。
 
 - 网址：https://jianminliao.github.io/
 - 公开仓库：https://github.com/JianminLiao/JianminLiao.github.io
