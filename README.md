@@ -4,7 +4,7 @@
 
 - 网址：https://jianminliao.github.io/
 - 公开仓库：https://github.com/JianminLiao/JianminLiao.github.io
-- 托管：GitHub Pages，main 分支的根目录；HTTPS。
+- 托管：GitHub Pages；main 经安全检查后，通过 GitHub Actions 发布白名单内的文件；HTTPS。
 
 ## 本地预览
 
@@ -12,7 +12,14 @@
 
 ## 更新网站
 
-直接修改 index.html 中的个人简介、研究方向、教育经历、论文和项目。外观在 styles.css；简历在 assets/Jianmin-Liao-CV.pdf。编辑后提交并推送到 main，GitHub Pages 自动更新。
+直接修改 index.html 中的个人简介、研究方向、教育经历、论文和项目。外观在 styles.css；简历在 assets/Jianmin-Liao-CV.pdf。在工作分支编辑后，先运行下面的检查，再通过 PR 合并到 main。安全检查成功后，GitHub Pages 自动更新；检查失败时保留上一版本。单人维护无需第二位审批者。
+
+```bash
+python3 -m unittest discover -s scripts -p 'test_*.py'
+python3 scripts/check_site.py
+```
+
+新增网页或资源时同步更新 `site-files.txt`。检查器只检查 Git 已跟踪的文件，首次添加文件后请再次运行。发布流程只上传名单内的文件，不上传整个仓库。安全约定及恢复方法见 `SECURITY.md`。
 
 每篇论文使用 .publication，项目使用 .project；沿用已有条目的结构。只添加真实存在的 Paper、PDF、Code 或 Demo 链接。Google Scholar 主页已添加到侧栏与联系区域，使用公开链接 https://scholar.google.com/citations?user=6-htFRUAAAAJ&hl=en ，不携带账号或临时参数。
 
@@ -32,7 +39,7 @@ Essay 01（首篇文章）为 `thoughts/research-principle-ai-era.html`，附同
 
 ## 发布配置
 
-Settings → Pages → Build and deployment：选择 Deploy from a branch，main，/ (root)。确认 Enforce HTTPS。.nojekyll 让 GitHub 直接发布静态文件。
+Settings → Pages → Build and deployment：使用 GitHub Actions，保持 Enforce HTTPS。工作流 `.github/workflows/pages.yml` 先运行测试和安全检查，再生成 `_site/` 并部署；部署环境只接受 main。不要改回从仓库根目录直接发布，否则会绕过文件白名单和发布检查。
 
 自定义 404.html 使用根路径，因为这里是用户主页仓库。后续若迁往项目子目录，需要相应调整 404 页面中的根路径和首页 canonical / Open Graph URL。
 
