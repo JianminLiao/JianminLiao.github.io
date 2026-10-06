@@ -1,0 +1,21 @@
+# Only these files may be uploaded to GitHub Pages.
+# Add new public pages and assets explicitly; never add local project records.
+.nojekyll
+404.html
+index.html
+styles.css
+assets/Jianmin-Liao-CV.pdf
+assets/favicon.svg
+thoughts/index.html
+thoughts/research-principle-ai-era.html
+thoughts/thoughts.css
+thoughts/research-principle.pdf
+thoughts/research-principle.tex
+thoughts/assets/nonlinear-simulation-mobile.svg
+thoughts/assets/nonlinear-simulation.svg
+thoughts/assets/research-simulation-mobile.svg
+thoughts/assets/research-simulation.svg
+thoughts/simulation/nonlinear-result.json
+thoughts/simulation/result.json
+thoughts/simulation/solve.py
+thoughts/simulation/solve_nonlinear.py

@@ -109,3 +109,5 @@ footer a { text-decoration: none; }
   section { padding: 1rem 0; break-inside: avoid; }
   a { color: inherit; }
 }
+
+.not-found { max-width: 42rem; margin: 12vh auto; padding: 2rem; }
