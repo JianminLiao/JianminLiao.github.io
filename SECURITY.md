@@ -1,8 +1,9 @@
 # Website security and publishing
 
-This is a public, static academic website. Its browser pages have no scripts,
-forms, login, analytics, or third-party resources. Keep that small attack surface
-unless a new feature has been deliberately reviewed.
+This is a public, static academic website with no forms or login. The homepage
+has one reviewed exception for the deferred Umami Cloud analytics tracker;
+other pages retain the script-free policy. Review any additional external
+resources explicitly before changing the policy.
 
 ## Every update
 
@@ -25,6 +26,28 @@ All HTML pages must include the CSP and referrer policy defined in
 not inline styles. SVGs must remain passive illustrations. Existing mathematical
 source files and simulation scripts are intentionally public downloads; GitHub
 Pages does not execute those Python files.
+
+## Umami Cloud exception
+
+Only `index.html` may load `https://cloud.umami.is/script.js`. Its CSP permits
+that exact script path and connections to `https://gateway.umami.is`, the Cloud
+collection endpoint documented in the [official changelog](https://docs.umami.is/docs/cloud/changelog).
+Do not allow all HTTPS scripts, inline JavaScript, or extra script attributes.
+The checks require one deferred tracker, a website UUID, no inline script body,
+and no collection-host override. An unfilled Website ID blocks publication.
+
+The Website ID is public tracking configuration, not an account password or
+API key. Account credentials stay in Chrome's password manager. The account's
+private statistics must not be exposed through a shared/public dashboard unless
+the owner explicitly requests it. The script is hosted and updated by Umami;
+the narrow CSP does not remove that third-party trust requirement.
+
+This integration covers only the homepage. Article pages, downloads, and outbound
+link clicks are not explicitly instrumented. No user IDs, custom visitor data,
+session replay, or heatmap configuration is added. The default tracker can send
+page URLs (including query parameters) and available referrer information, so
+never put private data in public URLs. Cookie-free analytics still undercounts
+visitors using blocking tools; visitor counts are approximate.
 
 ## Dependencies and permissions
 
@@ -53,7 +76,7 @@ unreviewed third-party PDFs. The lightweight CI scanner recognizes common key
 formats in repository files, but does not unpack PDFs or archives and is not a
 complete secret scanner or malware detector.
 
-The HTML CSP disables JavaScript and external resources. The meta form cannot
+The HTML CSP blocks unapproved JavaScript and external resources. The meta form cannot
 set `frame-ancestors`, so it does not prevent another site from embedding a page.
 Full response-header controls would require a hosting/proxy change. The current
 site has no authenticated or sensitive actions that could be clickjacked.

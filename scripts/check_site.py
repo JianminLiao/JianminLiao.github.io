@@ -13,6 +13,8 @@ from urllib.parse import unquote, urljoin, urlsplit
 import xml.etree.ElementTree as ET
 
 CSP = "default-src 'none'; script-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'"
+UMAMI_SCRIPT = "https://cloud.umami.is/script.js"
+UMAMI_CSP = CSP.replace("script-src 'none'", f"script-src {UMAMI_SCRIPT}; connect-src https://gateway.umami.is")
 ORIGIN = "https://jianminliao.github.io"
 PRIVATE = {'.handoff', '.git', '.ssh', '.aws', '.codex', '.agents', '.venv',
            'AGENTS.md', 'NOW.md', 'CLAUDE.md'}
@@ -39,6 +41,9 @@ class Page(HTMLParser):
         self.name, self.public = name, public
         self.errors = []
         self.csp, self.referrer = False, False
+        self.umami_policy = False
+        self.umami_scripts = 0
+        self.in_script = False
 
     def fail(self, reason):
         self.errors.append(f'{self.name}:{self.getpos()[0]}: {reason}')
@@ -61,16 +66,27 @@ class Page(HTMLParser):
         a = dict(attrs)
         if len(a) != len(attrs):
             self.fail('duplicate HTML attributes')
-        if tag in {'script', 'style', 'iframe', 'frame', 'frameset', 'object', 'embed', 'form', 'base'}:
+        if tag == 'script':
+            self.in_script = True
+            self.umami_scripts += 1
+            if (self.name != 'index.html' or not self.umami_policy
+                    or set(a) != {'defer', 'src', 'data-website-id'}
+                    or a.get('src') != UMAMI_SCRIPT
+                    or not re.fullmatch(r'[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}', a.get('data-website-id', ''), re.I)):
+                self.fail('only the deferred Umami Cloud tracker with a real website UUID is allowed on the homepage')
+            return
+        if tag in {'style', 'iframe', 'frame', 'frameset', 'object', 'embed', 'form', 'base'}:
             self.fail(f'<{tag}> is outside the static-site policy')
         if any(k.startswith('on') or k == 'style' for k in a):
             self.fail('inline styles and event handlers are not allowed')
         if tag == 'meta':
             directive = a.get('http-equiv', '').lower()
             if directive == 'content-security-policy':
-                if a.get('content') != CSP or self.csp:
+                approved = a.get('content') == CSP or (self.name == 'index.html' and a.get('content') == UMAMI_CSP)
+                if not approved or self.csp:
                     self.fail('use exactly one copy of the approved CSP')
-                self.csp = a.get('content') == CSP
+                self.csp = approved
+                self.umami_policy = self.name == 'index.html' and a.get('content') == UMAMI_CSP
             elif directive:
                 self.fail('unexpected http-equiv directive')
             if a.get('name', '').lower() == 'referrer':
@@ -85,7 +101,25 @@ class Page(HTMLParser):
             if candidate.strip():
                 self.check_url(candidate.split()[0], resource=True)
 
-    handle_startendtag = handle_starttag
+    def handle_startendtag(self, tag, attrs):
+        if tag == 'script':
+            self.fail('script must have an explicit closing tag')
+        self.handle_starttag(tag, attrs)
+
+    def handle_data(self, data):
+        if self.in_script and data.strip():
+            self.fail('inline script content is not allowed')
+
+    def handle_endtag(self, tag):
+        if tag == 'script':
+            self.in_script = False
+
+    def close(self):
+        super().close()
+        if self.in_script:
+            self.fail('script must have an explicit closing tag')
+        if self.umami_policy and self.umami_scripts != 1:
+            self.fail('the Umami policy requires exactly one tracker')
 
 
 def audit(root, tracked):
@@ -122,6 +156,7 @@ def audit(root, tracked):
         if path.suffix == '.html':
             page = Page(name, public)
             page.feed(data.decode())
+            page.close()
             errors.extend(page.errors)
             if not page.csp or not page.referrer:
                 errors.append(f'{name}: missing approved CSP or referrer policy')
