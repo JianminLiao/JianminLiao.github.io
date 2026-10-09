@@ -24,6 +24,7 @@ a:focus-visible { outline: 3px solid #306aab; outline-offset: 5px; border-radius
 .cv-link:hover { background: var(--wash); }
 .profile-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; font-size: .875rem; }
 .research-note { margin: 2rem 0 0; padding: 1rem 1.25rem; background: var(--wash); border-left: 3px solid var(--accent); font-size: .9375rem; }
+.opportunities { margin: 1.5rem 0 .5rem; }
 .note-label { display: block; color: var(--accent); font-size: .75rem; font-weight: 650; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .25rem; }
 .education { margin-top: 2rem; }
 .education h3 { font-size: .875rem; margin: 0 0 1rem; color: var(--muted); font-weight: 600; }

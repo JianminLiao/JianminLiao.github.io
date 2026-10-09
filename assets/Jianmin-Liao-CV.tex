@@ -1,0 +1,165 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[
+  ignoreheadfoot,
+  top=1.10cm,
+  bottom=1.15cm,
+  left=1.50cm,
+  right=1.50cm,
+  footskip=0.8cm
+]{geometry}
+\usepackage[explicit]{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{20,72,122}
+\definecolor{bodyColor}{RGB}{31,41,51}
+\definecolor{mutedColor}{RGB}{76,88,101}
+\definecolor{ruleColor}{RGB}{175,195,214}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage[
+  pdftitle={Jianmin Liao - Resume},
+  pdfauthor={Jianmin Liao},
+  pdfcreator={LaTeX},
+  colorlinks=true,
+  urlcolor=primaryColor
+]{hyperref}
+\usepackage{bookmark}
+\usepackage{calc}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+\usepackage[default,type1]{sourcesanspro}
+
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.20cm}
+\linespread{1.015}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=1em
+
+\titleformat{\section}
+  {\needspace{3\baselineskip}\fontsize{12.5pt}{14pt}\selectfont\color{primaryColor}}
+  {}{0pt}{\textbf{#1}\hspace{0.14cm}\color{ruleColor}\titlerule[0.65pt]\hspace{-0.1cm}}
+\titlespacing*{\section}{-1pt}{0.21cm}{0.12cm}
+
+\newenvironment{highlights}{\begin{itemize}[label=\textcolor{primaryColor}{\small\textbullet},topsep=0.10cm,parsep=0pt,partopsep=0pt,itemsep=0.04cm,leftmargin=0.44cm+10pt]}{\end{itemize}}
+\newenvironment{onecolentry}{\begin{adjustwidth}{0.14cm+0.00001cm}{0.14cm+0.00001cm}\raggedright}{\end{adjustwidth}}
+\newenvironment{twocolentry}[2][]{\onecolentry\def\secondColumn{\fontsize{9.8pt}{11.2pt}\selectfont\color{mutedColor}#2}\setcolumnwidth{\fill,3.55cm}\begin{paracol}{2}}{\switchcolumn\raggedleft\secondColumn\end{paracol}\endonecolentry}
+\newenvironment{threecolentry}[3][]{\onecolentry\def\thirdColumn{\fontsize{9.8pt}{11.2pt}\selectfont\color{mutedColor}#3}\setcolumnwidth{1.25cm,\fill,5.10cm}\begin{paracol}{3}{\raggedright #2}\switchcolumn}{\switchcolumn\raggedleft\thirdColumn\end{paracol}\endonecolentry}
+\newenvironment{header}{\setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.05}}{\par\kern\topsep}
+
+\let\hrefWithoutArrow\href
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2\,\raisebox{.15ex}{\scriptsize\faExternalLink*}}}}
+
+\begin{document}
+\color{bodyColor}
+
+\begin{header}
+  {\fontsize{23pt}{25pt}\selectfont\color{primaryColor}\textbf{Jianmin Liao}}\\[-0.02cm]
+  {\fontsize{10.3pt}{12.2pt}\selectfont\color{mutedColor}
+    APPLIED MATHEMATICS \enspace\textbullet\enspace MACHINE LEARNING \enspace\textbullet\enspace COMPUTER VISION}
+  \vspace{0.18cm}
+
+  {\fontsize{9.6pt}{11.2pt}\selectfont
+  Syracuse, NY \enspace\textcolor{ruleColor}{|}\enspace
+  \hrefWithoutArrow{mailto:jliao21@syr.edu}{jliao21@syr.edu}\\[0.02cm]
+  \hrefWithoutArrow{https://jianminliao.github.io/}{jianminliao.github.io} \enspace\textcolor{ruleColor}{|}\enspace
+  \hrefWithoutArrow{https://github.com/JianminLiao}{github.com/JianminLiao} \enspace\textcolor{ruleColor}{|}\enspace
+  \hrefWithoutArrow{https://linkedin.com/in/jianmin-liao}{linkedin.com/in/jianmin-liao}
+  }
+\end{header}
+
+\section{Summary}
+\begin{onecolentry}
+\color{mutedColor}Applied mathematician and ML researcher combining mathematical modeling and optimization with AI-assisted implementation and experimentation. First-author NeurIPS 2026 paper (accepted); data-efficient image restoration and inverse problems. Seeking Research Scientist / Applied Scientist roles and research collaborations.
+\end{onecolentry}
+
+\section{Education}
+\begin{threecolentry}{\textbf{Ph.D.}}{Aug 2022--May 2027 (Expected)}
+  \textbf{Mathematics (Statistics emphasis)}, Syracuse University
+\end{threecolentry}
+\vspace{0.06cm}
+\begin{threecolentry}{\textbf{M.S.}}{Sep 2019--Jun 2022}
+  \textbf{Computational Mathematics}, Sun Yat-sen University
+\end{threecolentry}
+\vspace{0.06cm}
+\begin{threecolentry}{\textbf{B.S.}}{Sep 2015--Jun 2019}
+  \textbf{Information and Computing Science}, Sun Yat-sen University
+\end{threecolentry}
+
+\section{Research Experience \& Publications}
+
+\begin{twocolentry}{Jan 2026--Present}
+  \textbf{\hrefWithoutArrow{https://arxiv.org/abs/2605.20479}{\textcolor{bodyColor}{Oracle Supervision Transfers for Hyperparameter Prediction in Model-Based Image Denoising}}}\\
+  \textit{\color{mutedColor}First and corresponding author; NeurIPS 2026 Main Track (accepted)}
+\end{twocolentry}
+\begin{onecolentry}
+\begin{highlights}
+  \item Conceived HyperDn, designed the method and experiments, and wrote the manuscript; the configuration-conditioned PyTorch predictor uses a 2.18M-parameter ConvNeXtV2 backbone and transfers TV/TGV supervision from 13 source configurations to diffusion-based DiffPIR.
+  \item With \textbf{2 DiffPIR target oracle labels}, achieved \textbf{30.23 dB}---within 0.90 dB of oracle and 2.50 dB above the identical architecture without source pretraining on WED $256\times256$.
+  \item Without target oracle labels, transferred to two mixtures of individually seen noise types and three evaluated resolutions ($321\times481$, $512\times768$, $\sim\!1024\times768$), with 0.01--0.27 dB gaps to oracle.
+  \item For L2-TV Gaussian, selected hyperparameters in 14--47 ms versus 2.04--10.86 s for Monte Carlo SURE on three OOD datasets, excluding the shared downstream solver.
+  \item Extended transfer to SSIM and LPIPS objectives: with metric-specific training, one target label outperformed a from-scratch baseline using 16 labels on both metrics.
+  \item Transferred to unseen NLM and CBM3D denoisers with different hyperparameter semantics, achieving the best mean PSNR among evaluated baselines at all seven tested few-shot budgets.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.11cm}
+
+\begin{twocolentry}{Mar 2025--Jul 2026}
+  \textbf{\hrefWithoutArrow{https://doi.org/10.1007/s10851-026-01329-2}{\textcolor{bodyColor}{MG-SpaIR: Multi-Grade Sparse-Guided Implicit Representation for Training-Data-Free Image Restoration}}}\\
+  \textit{\color{mutedColor}Co-first and corresponding author; J. Math. Imaging Vis. 68, Article 48 (2026)}
+\end{twocolentry}
+\begin{onecolentry}
+\begin{highlights}
+  \item Co-developed a PyTorch framework that restores images from a single observation without an external training set under combined blur, downsampling, noise, and missing pixels.
+  \item On the paper's mixed-degradation evaluation, achieved the highest average PSNR/SSIM among compared training-data-free approaches; multi-grade training used \textbf{30\% less VRAM} than single-grade.
+  \item Across SIREN, WIRE, and Instant-NGP, validated the regularizer and established per-grade objective convergence and asymptotic stationarity under explicit regularity and step-size conditions.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.11cm}
+
+\begin{twocolentry}{Jul 2019--Aug 2023}
+  \textbf{\hrefWithoutArrow{https://arxiv.org/abs/2308.11904}{\textcolor{bodyColor}{A Successive Two-stage Method for Sparse Generalized Eigenvalue Problems}}}\\
+  \textit{\color{mutedColor}First author; arXiv preprint 2308.11904 (2023)}
+\end{twocolentry}
+\begin{onecolentry}
+\begin{highlights}
+  \item Implemented and benchmarked a MATLAB support-alteration solver for sparse PCA, Fisher discriminant analysis, and canonical correlation analysis on problems with up to 20,000 variables.
+\end{highlights}
+\end{onecolentry}
+
+\section{Technical Skills}
+\begin{onecolentry}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{2.75cm} >{\raggedright\arraybackslash}X@{}}
+  Programming & Python, C++, SQL, MATLAB \\[0.05cm]
+  ML / Scientific & PyTorch, NumPy, pandas, scikit-learn \\[0.05cm]
+  Methods / Tools & Deep learning, computer vision, image restoration, transfer learning, diffusion-based restoration, implicit neural representations, numerical optimization, AI-assisted research workflows, Linux, Git, HTCondor
+\end{tabularx}
+\end{onecolentry}
+
+\vspace{0.16cm}
+\begin{onecolentry}
+{\fontsize{9.8pt}{11.2pt}\selectfont
+\textbf{\color{primaryColor}Additional:} \textbf{Teaching Assistant}, Syracuse University \& Sun Yat-sen University (2019--Present); Reviewer: NeurIPS 2026; IPCO 2024; Coursework \& Qualifying Exams Prize, Syracuse University (2024--2025)
+}
+\end{onecolentry}
+
+\end{document}

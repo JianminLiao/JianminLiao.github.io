@@ -12,7 +12,7 @@
 
 ## 更新网站
 
-直接修改 index.html 中的个人简介、研究方向、教育经历、论文和项目。外观在 styles.css；简历在 assets/Jianmin-Liao-CV.pdf。在工作分支编辑后，先运行下面的检查，再通过 PR 合并到 main。安全检查成功后，GitHub Pages 自动更新；检查失败时保留上一版本。单人维护无需第二位审批者。
+直接修改 index.html 中的个人简介、研究方向、教育经历、论文和项目。外观在 styles.css；简历在 assets/Jianmin-Liao-CV.pdf，可编辑的公开源文件在 assets/Jianmin-Liao-CV.tex。在工作分支编辑后，先运行下面的检查，再通过 PR 合并到 main。安全检查成功后，GitHub Pages 自动更新；检查失败时保留上一版本。单人维护无需第二位审批者。
 
 ```bash
 python3 -m unittest discover -s scripts -p 'test_*.py'

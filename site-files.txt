@@ -5,6 +5,7 @@
 index.html
 styles.css
 assets/Jianmin-Liao-CV.pdf
+assets/Jianmin-Liao-CV.tex
 assets/favicon.svg
 thoughts/index.html
 thoughts/research-principle-ai-era.html
